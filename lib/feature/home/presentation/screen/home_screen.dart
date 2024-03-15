@@ -3,6 +3,7 @@ import 'package:budget_tracker_app/common/domain/transition_list/cubit/transacti
 import 'package:budget_tracker_app/common/presentation/component/app_bar/custom_app_bar.dart';
 import 'package:budget_tracker_app/common/presentation/component/card_wrapper/card_circular_bottom_border_wrapper.dart';
 import 'package:budget_tracker_app/feature/home/presentation/component/budget_card.dart';
+import 'package:budget_tracker_app/feature/home/presentation/component/budget_limit_card.dart';
 import 'package:budget_tracker_app/feature/home/presentation/component/exceeding_spending_limit_warning_card.dart';
 import 'package:budget_tracker_app/theme/app_colors.dart';
 import 'package:budget_tracker_app/theme/app_text_theme.dart';
@@ -28,10 +29,15 @@ class HomeScreen extends StatelessWidget {
                   .where((e) => e.limit != null)
                   .toList(),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 8),
             const BudgetCard(
               totalIncome: 12000,
               totalSpending: 43444,
+            ),
+            const SizedBox(height: 8),
+            const BudgetLimitCard(
+              limit: null,
+              currentMonth: 'февраль',
             ),
           ],
         ),
