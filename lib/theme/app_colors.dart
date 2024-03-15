@@ -11,13 +11,13 @@ class AppColors {
 
   static const Color error = Color(0xFFF19FA6);
 
-  static const Color backgroundPrimary = Color(0xFFEBEEF6);
+  static const Color backgroundPrimary = Color(0xFFEFF3F8);
 
-  static const Color backgroundSecondary = Color(0xFFEFF1F5);
+  static const Color backgroundSecondary = Color(0xFFF6F5F5);
 
   static const Color backgroundAndText = Color(0xFFFFFFFF);
 
-  static const Color textPrimary = Color(0xFF1F1F1F);
+  static const Color dark = Color(0xFF1F1F1F);
 
   static const Color textSecondary = Color(0xFF686868);
 

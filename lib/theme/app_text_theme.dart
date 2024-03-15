@@ -6,28 +6,28 @@ class AppTextTheme {
     fontWeight: FontWeight.w400,
     fontSize: 12,
     height: 16 / 12,
-    color: AppColors.textPrimary,
+    color: AppColors.dark,
   );
 
   static const regular = TextStyle(
     fontWeight: FontWeight.w400,
     fontSize: 14,
     height: 16 / 14,
-    color: AppColors.textPrimary,
+    color: AppColors.dark,
   );
 
   static const title = TextStyle(
     fontWeight: FontWeight.w600,
     fontSize: 16,
     height: 20 / 14,
-    color: AppColors.textPrimary,
+    color: AppColors.dark,
   );
 
   static const large = TextStyle(
     fontWeight: FontWeight.w400,
     fontSize: 16,
     height: 20 / 16,
-    color: AppColors.textPrimary,
+    color: AppColors.dark,
   );
 
   static const smallDisabled = TextStyle(

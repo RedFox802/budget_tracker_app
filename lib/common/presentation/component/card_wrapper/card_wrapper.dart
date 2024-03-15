@@ -1,3 +1,4 @@
+import 'package:budget_tracker_app/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 abstract class CardWrapper extends StatelessWidget {
@@ -40,7 +41,8 @@ abstract class CardWrapper extends StatelessWidget {
     return Material(
       type: MaterialType.card,
       elevation: elevation,
-      color: color ?? Colors.white,
+      shadowColor: AppColors.dark.withOpacity(0.3),
+      color: color ?? AppColors.backgroundSecondary,
       shape: border,
       borderRadius: border == null ? _getBorderRadius() : null,
       child: Padding(
