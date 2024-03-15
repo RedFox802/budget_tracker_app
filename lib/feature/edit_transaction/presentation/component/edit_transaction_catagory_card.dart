@@ -56,7 +56,7 @@ class _EditTransactionCategoryCardState
             vertical: -4,
           ),
           title: const Text(
-            '2) Категория',
+            '3) Категория',
             style: AppTextTheme.title,
           ),
           subtitle: Padding(
@@ -110,7 +110,7 @@ class _DrumPickerState extends State<_DrumPicker> {
         const Padding(
           padding: EdgeInsets.symmetric(vertical: 12),
           child: Text(
-            '2) Выберите категорию транзакции',
+            '3) Выберите категорию транзакции',
             style: AppTextTheme.title,
           ),
         ),
