@@ -5,6 +5,7 @@ import 'package:budget_tracker_app/common/domain/transition_list/model/transacti
 import 'package:budget_tracker_app/common/presentation/component/app_bar/custom_app_bar.dart';
 import 'package:budget_tracker_app/common/presentation/component/card_wrapper/card_circular_top_border_wrapper.dart';
 import 'package:budget_tracker_app/feature/home/presentation/component/transaction_group_card.dart';
+import 'package:budget_tracker_app/router/app_router.dart';
 import 'package:budget_tracker_app/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,7 +32,9 @@ class TransitionsListScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         backgroundColor: AppColors.primary100,
         child: const Icon(Icons.add),
-        onPressed: () {},
+        onPressed: () {
+          context.router.push(EditTransactionRoute());
+        },
       ),
       body: Column(
         children: [

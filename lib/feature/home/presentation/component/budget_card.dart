@@ -17,7 +17,6 @@ class BudgetCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return CardCircularBorderAllWrapper(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-      elevation: 1,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

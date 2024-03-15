@@ -17,7 +17,6 @@ class BudgetLimitCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CardCircularBorderAllWrapper(
-      elevation: 1,
       padding: const EdgeInsets.all(16),
       child: hasLimit
           ? _HasLimitState._(

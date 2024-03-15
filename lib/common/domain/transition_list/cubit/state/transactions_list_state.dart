@@ -19,3 +19,10 @@ class TransactionsListState with _$TransactionsListState {
   factory TransactionsListState.fromJson(Map<String, dynamic> json) =>
       _$TransactionsListStateFromJson(json);
 }
+
+extension TransactionsListStateHelper on TransactionsListState {
+  Iterable<TransactionCategory> get availableCategories => [
+        ...availableExpenditureCategories,
+        ...availableIncomeCategories,
+      ];
+}

@@ -1,7 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:budget_tracker_app/app/app_root_screen.dart';
+import 'package:budget_tracker_app/common/domain/transition_list/model/transaction/transaction_entity.dart';
 import 'package:budget_tracker_app/feature/analytic/presentation/analytic_router.dart';
 import 'package:budget_tracker_app/feature/analytic/presentation/screen/analytic_screen.dart';
+import 'package:budget_tracker_app/feature/edit_transaction/presentation/screen/edit_transaction_screen.dart';
 import 'package:budget_tracker_app/feature/home/presentation/home_router.dart';
 import 'package:budget_tracker_app/feature/home/presentation/screen/home_screen.dart';
 import 'package:budget_tracker_app/feature/profile/presentation/profile_router.dart';
@@ -40,6 +42,10 @@ class AppRouter extends _$AppRouter {
             AnalyticRouter.router,
             ProfileRouter.router,
           ],
+        ),
+        AutoRoute(
+          path: '/editTransition',
+          page: EditTransactionRoute.page,
         ),
       ];
 }

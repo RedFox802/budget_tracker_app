@@ -11,7 +11,7 @@ abstract class CardWrapper extends StatelessWidget {
     this.topRightBorderRadius,
     this.color,
     this.borderColor,
-    this.elevation = 0.0,
+    this.elevation = 1,
     Key? key,
   }) : super(key: key);
 
