@@ -24,6 +24,9 @@ class _TransactionGroupCardState extends State<TransactionGroupCard> {
 
   @override
   Widget build(BuildContext context) {
+    final transactions = widget.transactions;
+    if (transactions.isEmpty) return const SizedBox.shrink();
+
     final header = _TransactionGroupHeader._(
       title: widget.groupName,
       isOpened: isOpened,
@@ -43,7 +46,7 @@ class _TransactionGroupCardState extends State<TransactionGroupCard> {
               children: [
                 header,
                 const SizedBox(height: 10),
-                ...widget.transactions.map(
+                ...transactions.map(
                   (e) => TransactionCard(transaction: e),
                 ),
               ],

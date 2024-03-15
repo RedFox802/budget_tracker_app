@@ -31,25 +31,24 @@ class EditTransactionNameCard extends StatelessWidget {
           vertical: -4,
         ),
         title: const Text(
-          '1) Название',
+          '1) Краткое название',
           style: AppTextTheme.title,
           overflow: TextOverflow.ellipsis,
         ),
         subtitle: Padding(
           padding: const EdgeInsets.symmetric(vertical: 10),
           child: SizedBox(
-            height: 46,
+            height: 54,
             child: TextFormField(
               initialValue: initialValue,
               onChanged: onChanged,
+              maxLength: 20,
               cursorColor: AppColors.primary100,
               decoration: InputDecoration(
+                counter: const SizedBox.shrink(),
                 filled: true,
                 hintText: 'Введите название',
-                contentPadding: const EdgeInsets.symmetric(
-                  vertical: 8,
-                  horizontal: 16,
-                ),
+                contentPadding: const EdgeInsets.fromLTRB(16, 26, 16, 0),
                 fillColor: AppColors.primary10.withOpacity(0.2),
                 enabledBorder: _inputBorder,
                 border: _inputBorder,

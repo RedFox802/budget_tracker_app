@@ -1,6 +1,8 @@
+import 'package:budget_tracker_app/common/presentation/component/button/app_elevated_button.dart';
 import 'package:budget_tracker_app/common/presentation/component/card_wrapper/card_circular_border_all_wrapper.dart';
 import 'package:budget_tracker_app/theme/app_colors.dart';
 import 'package:budget_tracker_app/theme/app_text_theme.dart';
+import 'package:budget_tracker_app/utils/DateTimeUtils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +23,7 @@ class EditTransactionDateCard extends StatefulWidget {
 }
 
 class _EditTransactionDateCardState extends State<EditTransactionDateCard> {
-  bool _showPicker = true;
+  bool _showPicker = false;
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +58,7 @@ class _EditTransactionDateCardState extends State<EditTransactionDateCard> {
           subtitle: Padding(
             padding: const EdgeInsets.only(top: 6, left: 18),
             child: Text(
-              widget.selectedValue.toString(),
+              widget.selectedValue.formattedDate,
               style: AppTextTheme.regular,
             ),
           ),
@@ -107,7 +109,7 @@ class _DrumPickerState extends State<_DrumPicker> {
         ),
         const SizedBox(height: 16),
         SizedBox(
-          height: 166,
+          height: 100,
           child: CupertinoDatePicker(
             mode: CupertinoDatePickerMode.date,
             onDateTimeChanged: (date) {
@@ -120,26 +122,11 @@ class _DrumPickerState extends State<_DrumPicker> {
         const SizedBox(height: 16),
         SizedBox(
           height: 52,
-          child: ElevatedButton(
-            onPressed: () {
+          child: AppElevatedButton(
+            title: 'Выбрать',
+            onTap: () {
               widget.onButtonPressed(_selectedItem);
             },
-            style: ButtonStyle(
-              shape: MaterialStateProperty.resolveWith(
-                (_) => RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                ),
-              ),
-              backgroundColor: MaterialStateProperty.resolveWith(
-                (_) => AppColors.primary100,
-              ),
-            ),
-            child: Text(
-              'Сохранить',
-              style: AppTextTheme.title.copyWith(
-                color: AppColors.backgroundSecondary,
-              ),
-            ),
           ),
         ),
       ],

@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:budget_tracker_app/common/domain/transition_list/cubit/state/transactions_list_state.dart';
 import 'package:budget_tracker_app/common/domain/transition_list/cubit/transactions_list_cubit.dart';
-import 'package:budget_tracker_app/common/domain/transition_list/model/transaction/transaction_entity.dart';
-import 'package:budget_tracker_app/common/domain/transition_list/model/transaction_category/transaction_category.dart';
 import 'package:budget_tracker_app/common/presentation/component/app_bar/custom_app_bar.dart';
 import 'package:budget_tracker_app/feature/home/presentation/component/budget_card.dart';
 import 'package:budget_tracker_app/feature/home/presentation/component/budget_limit_card.dart';
@@ -31,9 +30,9 @@ class HomeScreen extends StatelessWidget {
                   .toList(),
             ),
             const SizedBox(height: 8),
-            const BudgetCard(
-              totalIncome: 12000,
-              totalSpending: 43444,
+            BudgetCard(
+              totalIncome: listenableState.totalIncome,
+              totalSpending: listenableState.totalExpenditure,
             ),
             const SizedBox(height: 8),
             const BudgetLimitCard(
@@ -43,41 +42,12 @@ class HomeScreen extends StatelessWidget {
             const SizedBox(height: 8),
             TransactionGroupCard(
               groupName: 'Последние траты',
-              transactions: [
-                TransactionEntity(
-                  type: TransactionType.expenditure,
-                  amount: 1500,
-                  category: const TransactionExpenditureCategory(
-                    name: 'Продукты',
-                  ),
-                  name: 'Сладости на неделю',
-                  date: DateTime.now(),
-                ),
-                TransactionEntity(
-                  type: TransactionType.expenditure,
-                  amount: 20000,
-                  category: const TransactionExpenditureCategory(
-                    name: 'Путешествия',
-                  ),
-                  name: 'Авиабилеты в Россию',
-                  date: DateTime.now(),
-                ),
-              ],
+              transactions: listenableState.expenditureTransitions.take(10),
             ),
             const SizedBox(height: 8),
             TransactionGroupCard(
               groupName: 'Последние доходы',
-              transactions: [
-                TransactionEntity(
-                  type: TransactionType.income,
-                  amount: 12000,
-                  category: const TransactionIncomeCategory(
-                    name: 'Заработная плата',
-                  ),
-                  name: 'Аванс по зп',
-                  date: DateTime.now(),
-                ),
-              ],
+              transactions: listenableState.incomeTransitions.take(10),
             ),
           ],
         ),

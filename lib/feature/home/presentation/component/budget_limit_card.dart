@@ -10,6 +10,7 @@ class BudgetLimitCard extends StatelessWidget {
   });
 
   final num? limit;
+
   final String currentMonth;
 
   bool get hasLimit => limit != null;
@@ -23,27 +24,33 @@ class BudgetLimitCard extends StatelessWidget {
               limit: '$limit ₽',
               currentMonth: currentMonth,
             )
-          : const _NoLimitState._(),
+          : _NoLimitState._(
+              currentMonth: currentMonth,
+            ),
     );
   }
 }
 
 class _NoLimitState extends StatelessWidget {
-  const _NoLimitState._();
+  const _NoLimitState._({
+    required this.currentMonth,
+  });
+
+  final String currentMonth;
 
   @override
   Widget build(BuildContext context) {
-    return const ListTile(
+    return ListTile(
       minVerticalPadding: 0,
       contentPadding: EdgeInsets.zero,
-      visualDensity: VisualDensity(vertical: -4, horizontal: -4),
+      visualDensity: const VisualDensity(vertical: -4, horizontal: -4),
       title: Text(
-        'Установите лимит трат на текущий месяц!',
+        'Установите лимит трат на $currentMonth!',
         style: AppTextTheme.title,
         maxLines: 2,
         overflow: TextOverflow.ellipsis,
       ),
-      subtitle: Padding(
+      subtitle: const Padding(
         padding: EdgeInsets.only(top: 6),
         child: Text(
           'Задайте лимиты по категориям или общий лимит по всем тратам.',

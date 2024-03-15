@@ -1,4 +1,5 @@
 import 'package:budget_tracker_app/common/domain/transition_list/model/transaction_category/transaction_category.dart';
+import 'package:budget_tracker_app/common/presentation/component/button/app_elevated_button.dart';
 import 'package:budget_tracker_app/common/presentation/component/card_wrapper/card_circular_border_all_wrapper.dart';
 import 'package:budget_tracker_app/feature/edit_transaction/presentation/component/custom_picker/custom_picker.dart';
 import 'package:budget_tracker_app/theme/app_colors.dart';
@@ -26,7 +27,7 @@ class EditTransactionCategoryCard extends StatefulWidget {
 
 class _EditTransactionCategoryCardState
     extends State<EditTransactionCategoryCard> {
-  bool _showPicker = true;
+  bool _showPicker = false;
 
   @override
   Widget build(BuildContext context) {
@@ -135,26 +136,11 @@ class _DrumPickerState extends State<_DrumPicker> {
         const SizedBox(height: 16),
         SizedBox(
           height: 52,
-          child: ElevatedButton(
-            onPressed: () {
+          child: AppElevatedButton(
+            title: 'Выбрать',
+            onTap: () {
               widget.onButtonPressed(_selectedItem);
             },
-            style: ButtonStyle(
-              shape: MaterialStateProperty.resolveWith(
-                (_) => RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                ),
-              ),
-              backgroundColor: MaterialStateProperty.resolveWith(
-                (_) => AppColors.primary100,
-              ),
-            ),
-            child: Text(
-              'Сохранить',
-              style: AppTextTheme.title.copyWith(
-                color: AppColors.backgroundSecondary,
-              ),
-            ),
           ),
         ),
       ],

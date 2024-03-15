@@ -1,12 +1,12 @@
-import 'package:budget_tracker_app/common/domain/transition_list/model/transaction_category/transaction_category.dart';
+import 'package:budget_tracker_app/common/domain/transition_list/cubit/state/transactions_list_state.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:budget_tracker_app/common/domain/transition_list/cubit/transactions_list_cubit.dart';
-import 'package:budget_tracker_app/common/domain/transition_list/model/transaction/transaction_entity.dart';
 import 'package:budget_tracker_app/common/presentation/component/app_bar/custom_app_bar.dart';
 import 'package:budget_tracker_app/common/presentation/component/card_wrapper/card_circular_top_border_wrapper.dart';
 import 'package:budget_tracker_app/feature/home/presentation/component/transaction_group_card.dart';
 import 'package:budget_tracker_app/router/app_router.dart';
 import 'package:budget_tracker_app/theme/app_colors.dart';
+import 'package:budget_tracker_app/utils/DateTimeUtils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,14 +17,9 @@ class TransitionsListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final listenableState = context.watch<TransactionsListCubit>().state;
-    final transactions = listenableState.transactions;
-    final months = list.map((e) => e.date.month).toSet();
-    final Map<String, Iterable<TransactionEntity>> monthsMap = {};
-    for (final month in months) {
-      monthsMap.addAll({
-        month.toString(): list.where((item) => item.date.month == month),
-      });
-    }
+    final months = listenableState.transactionsMonthsList;
+    final monthsMap = listenableState.transactionsByDates;
+
     return Scaffold(
       backgroundColor: AppColors.backgroundPrimary,
       appBar: const CustomAppBar(),
@@ -33,7 +28,9 @@ class TransitionsListScreen extends StatelessWidget {
         backgroundColor: AppColors.primary100,
         child: const Icon(Icons.add),
         onPressed: () {
-          context.router.push(EditTransactionRoute());
+          context.router.push(
+            EditTransactionRoute(),
+          );
         },
       ),
       body: Column(
@@ -50,7 +47,7 @@ class TransitionsListScreen extends StatelessWidget {
 
                   if (currentItem != null) {
                     return TransactionGroupCard(
-                      groupName: 'За февраль',
+                      groupName: currentItem.first.date.monthName,
                       transactions: currentItem,
                     );
                   }
@@ -64,66 +61,3 @@ class TransitionsListScreen extends StatelessWidget {
     );
   }
 }
-
-final list = [
-  TransactionEntity(
-    type: TransactionType.expenditure,
-    amount: 85443,
-    category: const TransactionExpenditureCategory(
-      name: 'Продукты',
-    ),
-    name: 'Покупка продуктов 1',
-    date: DateTime.now(),
-  ),
-  TransactionEntity(
-    type: TransactionType.expenditure,
-    amount: 12000,
-    category: const TransactionExpenditureCategory(
-      name: 'Продукты',
-    ),
-    name: 'Покупка продуктов 2',
-    date: DateTime.now(),
-  ),
-  TransactionEntity(
-    type: TransactionType.income,
-    amount: 46565,
-    category: const TransactionIncomeCategory(
-      name: 'Продукты',
-    ),
-    name: 'Покупка продуктов 3',
-    date: DateTime.now(),
-  ),
-  TransactionEntity(
-    type: TransactionType.expenditure,
-    amount: 35,
-    category: const TransactionExpenditureCategory(
-      name: 'Продукты',
-    ),
-    name: 'Покупка продуктов 4',
-    date: DateTime.now().subtract(
-      const Duration(days: 40),
-    ),
-  ),
-  TransactionEntity(
-    type: TransactionType.expenditure,
-    amount: 63276,
-    category: const TransactionExpenditureCategory(
-      name: 'Продукты',
-    ),
-    name: 'Покупка продуктов 5',
-    date: DateTime.now().subtract(
-      const Duration(days: 40),
-    ),
-  ),
-  TransactionEntity(
-    type: TransactionType.expenditure,
-    amount: 54666,
-    category: const TransactionExpenditureCategory(
-      name: 'Продукты',
-    ),
-    name: 'Покупка продуктов 6',
-    date: DateTime.now().subtract(
-      const Duration(days: 40),
-    ),
-  ),
-];

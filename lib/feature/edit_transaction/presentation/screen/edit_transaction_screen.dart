@@ -2,6 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:budget_tracker_app/common/domain/transition_list/cubit/transactions_list_cubit.dart';
 import 'package:budget_tracker_app/common/domain/transition_list/model/transaction/transaction_entity.dart';
 import 'package:budget_tracker_app/common/presentation/component/app_bar/custom_app_bar.dart';
+import 'package:budget_tracker_app/common/presentation/component/app_error_flush_bar.dart';
+import 'package:budget_tracker_app/common/presentation/component/button/app_elevated_button.dart';
 import 'package:budget_tracker_app/di/service_locator.dart';
 import 'package:budget_tracker_app/feature/edit_transaction/presentation/component/edit_transaction_catagory_card.dart';
 import 'package:budget_tracker_app/feature/edit_transaction/presentation/component/edit_transaction_date_card.dart';
@@ -54,6 +56,15 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
     return Scaffold(
       backgroundColor: AppColors.backgroundPrimary,
       appBar: const CustomAppBar(),
+      floatingActionButton: SizedBox(
+        width: MediaQuery.sizeOf(context).width - 32,
+        height: 50,
+        child: AppElevatedButton(
+          title: 'Сохранить',
+          onTap: _onSave,
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
         children: [
@@ -102,8 +113,30 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
             },
             selectedValue: transactionEntity.date,
           ),
+          const SizedBox(height: 60),
         ],
       ),
     );
+  }
+
+  bool _validateDate() {
+    if (transactionEntity.name.isEmpty) {
+      showFlushBarError(
+        context,
+        text: 'Пожалуйста введите название операции!',
+      );
+      return false;
+    }
+
+    return true;
+  }
+
+  void _onSave() {
+    if (!_validateDate()) return;
+    context.read<TransactionsListCubit>().addTransaction(
+          transactionEntity,
+        );
+
+    context.router.pop();
   }
 }

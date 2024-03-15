@@ -21,8 +21,39 @@ class TransactionsListState with _$TransactionsListState {
 }
 
 extension TransactionsListStateHelper on TransactionsListState {
+  Iterable<TransactionEntity> get incomeTransitions => transactions.where(
+        (item) => item.type == TransactionType.income,
+      );
+
+  Iterable<TransactionEntity> get expenditureTransitions => transactions.where(
+        (item) => item.type == TransactionType.expenditure,
+      );
+
+  num get totalIncome => incomeTransitions.fold(
+      0, (previousValue, element) => (previousValue + element.amount));
+
+  num get totalExpenditure => expenditureTransitions.fold(
+      0, (previousValue, element) => (previousValue + element.amount));
+
   Iterable<TransactionCategory> get availableCategories => [
         ...availableExpenditureCategories,
         ...availableIncomeCategories,
       ];
+
+  Set<int> get transactionsMonthsList =>
+      transactions.map((e) => e.date.month).toSet();
+
+  Map<String, Iterable<TransactionEntity>> get transactionsByDates {
+    final months = transactionsMonthsList;
+    final Map<String, Iterable<TransactionEntity>> monthsMap = {};
+
+    for (final month in months) {
+      monthsMap.addAll({
+        month.toString(): transactions.where(
+          (item) => item.date.month == month,
+        ),
+      });
+    }
+    return monthsMap;
+  }
 }

@@ -18,10 +18,21 @@ class TransactionsListCubit extends HydratedCubit<TransactionsListState> {
   }
 
   void addTransaction(TransactionEntity transaction) {
-    emit(
-      state.copyWith(
-        transactions: [...state.transactions, transaction],
-      ),
-    );
+    final currentTransactionList =
+        List<TransactionEntity>.from(state.transactions);
+    final elementIndex = currentTransactionList.indexOf(transaction);
+    if (elementIndex >= 0) {
+      currentTransactionList
+        ..removeAt(elementIndex)
+        ..insert(elementIndex, transaction);
+
+      emit(state.copyWith(transactions: currentTransactionList));
+    } else {
+      emit(
+        state.copyWith(
+          transactions: [...state.transactions, transaction],
+        ),
+      );
+    }
   }
 }
