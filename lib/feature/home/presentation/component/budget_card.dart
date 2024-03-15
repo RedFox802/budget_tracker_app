@@ -1,5 +1,4 @@
 import 'package:budget_tracker_app/common/presentation/component/card_wrapper/card_circular_border_all_wrapper.dart';
-import 'package:budget_tracker_app/theme/app_colors.dart';
 import 'package:budget_tracker_app/theme/app_text_theme.dart';
 import 'package:flutter/material.dart';
 
@@ -17,39 +16,59 @@ class BudgetCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CardCircularBorderAllWrapper(
-      padding:  EdgeInsets.zero,
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
       elevation: 1,
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
-            child: ListTile(
-              title: const Text(
-                'Сумма доходов',
-                style: AppTextTheme.largeDisabled,
-                overflow: TextOverflow.ellipsis,
-              ),
-              subtitle: Text(
-                '$totalIncome ₽',
-                style: AppTextTheme.title,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
+          const Text(
+            'Операции за последний месяц',
+            style: AppTextTheme.title,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
           ),
-          Expanded(
-            child: ListTile(
-              title: const Text(
-                'Сумма расходов',
-                style: AppTextTheme.largeDisabled,
-                overflow: TextOverflow.ellipsis,
+          const SizedBox(height: 4),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  title: const Text(
+                    'Сумма доходов',
+                    style: AppTextTheme.regularDisabled,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  subtitle: Padding(
+                    padding: const EdgeInsets.only(top: 4),
+                    child: Text(
+                      '$totalIncome ₽',
+                      style: AppTextTheme.title,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ),
               ),
-              subtitle: Text(
-                '$totalSpending ₽',
-                style: AppTextTheme.title,
-                overflow: TextOverflow.ellipsis,
+              Expanded(
+                child: ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  title: const Text(
+                    'Сумма расходов',
+                    style: AppTextTheme.regularDisabled,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  subtitle: Padding(
+                    padding: const EdgeInsets.only(top: 4),
+                    child: Text(
+                      '$totalSpending ₽',
+                      style: AppTextTheme.title,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
         ],
       ),

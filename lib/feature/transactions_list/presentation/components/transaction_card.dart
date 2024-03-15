@@ -34,17 +34,20 @@ class TransactionCard extends StatelessWidget {
             visualDensity: const VisualDensity(vertical: -4, horizontal: -4),
             title: Text(
               transaction.name,
-              style: AppTextTheme.regular,
+              style: AppTextTheme.large,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
-            subtitle: Text(
-              isNeedShowDate
-                  ? '$categoryName ${date.day}.${date.month}.${date.year}'
-                  : categoryName,
-              style: AppTextTheme.smallDisabled,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
+            subtitle: Padding(
+              padding: const EdgeInsets.only(top: 4),
+              child: Text(
+                isNeedShowDate
+                    ? '$categoryName ${date.day}.${date.month}.${date.year}'
+                    : categoryName,
+                style: AppTextTheme.regularDisabled,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
           ),
         ),
