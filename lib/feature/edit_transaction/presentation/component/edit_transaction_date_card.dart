@@ -1,31 +1,26 @@
-import 'package:budget_tracker_app/common/domain/transition_list/model/transaction_category/transaction_category.dart';
 import 'package:budget_tracker_app/common/presentation/component/card_wrapper/card_circular_border_all_wrapper.dart';
-import 'package:budget_tracker_app/feature/edit_transaction/presentation/component/custom_picker/custom_picker.dart';
 import 'package:budget_tracker_app/theme/app_colors.dart';
 import 'package:budget_tracker_app/theme/app_text_theme.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class EditTransactionCategoryCard extends StatefulWidget {
-  const EditTransactionCategoryCard({
+class EditTransactionDateCard extends StatefulWidget {
+  const EditTransactionDateCard({
     required this.onChanged,
-    required this.selectedCategory,
-    required this.availableCategory,
+    required this.selectedValue,
     super.key,
   });
 
-  final TransactionCategory selectedCategory;
+  final DateTime selectedValue;
 
-  final Iterable<TransactionCategory> availableCategory;
-
-  final ValueChanged<TransactionCategory> onChanged;
+  final ValueChanged<DateTime> onChanged;
 
   @override
-  State<EditTransactionCategoryCard> createState() =>
-      _EditTransactionCategoryCardState();
+  State<EditTransactionDateCard> createState() =>
+      _EditTransactionDateCardState();
 }
 
-class _EditTransactionCategoryCardState
-    extends State<EditTransactionCategoryCard> {
+class _EditTransactionDateCardState extends State<EditTransactionDateCard> {
   bool _showPicker = true;
 
   @override
@@ -39,8 +34,7 @@ class _EditTransactionCategoryCardState
             _showPicker ? CrossFadeState.showFirst : CrossFadeState.showSecond,
         duration: const Duration(milliseconds: 300),
         firstChild: _DrumPicker._(
-          selectedCategory: widget.selectedCategory,
-          categories: widget.availableCategory,
+          selectedValue: widget.selectedValue,
           onButtonPressed: (answer) {
             setState(
               () {
@@ -56,13 +50,13 @@ class _EditTransactionCategoryCardState
             vertical: -4,
           ),
           title: const Text(
-            '2) Категория',
+            '4) Дата выполнения',
             style: AppTextTheme.title,
           ),
           subtitle: Padding(
             padding: const EdgeInsets.only(top: 6, left: 18),
             child: Text(
-              widget.selectedCategory.name,
+              widget.selectedValue.toString(),
               style: AppTextTheme.regular,
             ),
           ),
@@ -83,23 +77,20 @@ class _EditTransactionCategoryCardState
 
 class _DrumPicker extends StatefulWidget {
   const _DrumPicker._({
-    required this.selectedCategory,
+    required this.selectedValue,
     required this.onButtonPressed,
-    required this.categories,
   });
 
-  final TransactionCategory selectedCategory;
+  final DateTime selectedValue;
 
-  final Iterable<TransactionCategory> categories;
-
-  final ValueChanged<TransactionCategory> onButtonPressed;
+  final ValueChanged<DateTime> onButtonPressed;
 
   @override
   State<_DrumPicker> createState() => _DrumPickerState();
 }
 
 class _DrumPickerState extends State<_DrumPicker> {
-  late TransactionCategory _selectedItem = widget.selectedCategory;
+  late DateTime _selectedItem = widget.selectedValue;
 
   @override
   Widget build(BuildContext context) {
@@ -110,27 +101,21 @@ class _DrumPickerState extends State<_DrumPicker> {
         const Padding(
           padding: EdgeInsets.symmetric(vertical: 12),
           child: Text(
-            '2) Выберите категорию транзакции',
+            '4) Выберите дату выполнения',
             style: AppTextTheme.title,
           ),
         ),
         const SizedBox(height: 16),
-        CustomPicker(
-          onSelectedItemChanged: (index) {
-            setState(() {
-              _selectedItem = widget.categories.elementAt(index);
-            });
-          },
-          items: widget.categories
-              .map(
-                (e) => Center(
-                  child: Text(
-                    e.name,
-                    style: const TextStyle(color: AppColors.primary100),
-                  ),
-                ),
-              )
-              .toList(),
+        SizedBox(
+          height: 166,
+          child: CupertinoDatePicker(
+            mode: CupertinoDatePickerMode.date,
+            onDateTimeChanged: (date) {
+              setState(() {
+                _selectedItem = date;
+              });
+            },
+          ),
         ),
         const SizedBox(height: 16),
         SizedBox(

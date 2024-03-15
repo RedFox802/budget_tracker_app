@@ -4,6 +4,7 @@ import 'package:budget_tracker_app/common/domain/transition_list/model/transacti
 import 'package:budget_tracker_app/common/presentation/component/app_bar/custom_app_bar.dart';
 import 'package:budget_tracker_app/di/service_locator.dart';
 import 'package:budget_tracker_app/feature/edit_transaction/presentation/component/edit_transaction_catagory_card.dart';
+import 'package:budget_tracker_app/feature/edit_transaction/presentation/component/edit_transaction_date_card.dart';
 import 'package:budget_tracker_app/feature/edit_transaction/presentation/component/edit_transaction_type_card.dart';
 import 'package:budget_tracker_app/theme/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -79,6 +80,17 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                 );
               });
             },
+          ),
+          const SizedBox(height: 10),
+          EditTransactionDateCard(
+            onChanged: (DateTime value) {
+              setState(() {
+                transactionEntity = transactionEntity.copyWith(
+                  date: value,
+                );
+              });
+            },
+            selectedValue: transactionEntity.date,
           ),
         ],
       ),
