@@ -5,8 +5,9 @@ class CardCircularBorderAllWrapper extends CardWrapper {
     required super.child,
     required super.padding,
     super.elevation,
-    this.borderRadius = 16,
     super.color,
+    super.borderColor,
+    this.borderRadius = 16,
     super.key,
   }) : super(
           topLeftBorderRadius: borderRadius,

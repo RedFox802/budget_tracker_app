@@ -9,7 +9,11 @@ class AppColors {
 
   static const Color secondary = Color(0xFFFF3D00);
 
-  static const Color backgroundAll = Color(0xFFF8F7F5);
+  static const Color error = Color(0xFFF19FA6);
+
+  static const Color backgroundPrimary = Color(0xFFEBEEF6);
+
+  static const Color backgroundSecondary = Color(0xFFEFF1F5);
 
   static const Color backgroundAndText = Color(0xFFFFFFFF);
 

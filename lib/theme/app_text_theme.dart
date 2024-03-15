@@ -16,6 +16,13 @@ class AppTextTheme {
     color: AppColors.textPrimary,
   );
 
+  static const title = TextStyle(
+    fontWeight: FontWeight.w600,
+    fontSize: 16,
+    height: 20 / 14,
+    color: AppColors.textPrimary,
+  );
+
   static const large = TextStyle(
     fontWeight: FontWeight.w400,
     fontSize: 16,

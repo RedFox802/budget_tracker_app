@@ -9,6 +9,7 @@ abstract class CardWrapper extends StatelessWidget {
     this.bottomRightBorderRadius,
     this.topRightBorderRadius,
     this.color,
+    this.borderColor,
     this.elevation = 0.0,
     Key? key,
   }) : super(key: key);
@@ -27,24 +28,49 @@ abstract class CardWrapper extends StatelessWidget {
 
   final double elevation;
 
+  final Color? borderColor;
+
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
+    final border = _getBorder(
+      borderColor: borderColor,
+    );
     return Material(
       type: MaterialType.card,
       elevation: elevation,
       color: color ?? Colors.white,
-      borderRadius: BorderRadius.only(
-        topLeft: _getRadius(topLeftBorderRadius),
-        topRight: _getRadius(topRightBorderRadius),
-        bottomRight: _getRadius(bottomRightBorderRadius),
-        bottomLeft: _getRadius(bottomLeftBorderRadius),
-      ),
+      shape: border,
+      borderRadius: border == null ? _getBorderRadius() : null,
       child: Padding(
         padding: padding,
         child: child,
       ),
+    );
+  }
+
+  ShapeBorder? _getBorder({
+    Color? borderColor,
+  }) {
+    if (borderColor != null) {
+      return RoundedRectangleBorder(
+        side: BorderSide(
+          color: borderColor,
+          width: 2,
+        ),
+        borderRadius: _getBorderRadius(),
+      );
+    }
+    return null;
+  }
+
+  BorderRadius _getBorderRadius() {
+    return BorderRadius.only(
+      topLeft: _getRadius(topLeftBorderRadius),
+      topRight: _getRadius(topRightBorderRadius),
+      bottomRight: _getRadius(bottomRightBorderRadius),
+      bottomLeft: _getRadius(bottomLeftBorderRadius),
     );
   }
 
