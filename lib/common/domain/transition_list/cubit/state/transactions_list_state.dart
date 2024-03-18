@@ -43,13 +43,13 @@ extension TransactionsListStateHelper on TransactionsListState {
   Set<int> get transactionsMonthsList =>
       transactions.map((e) => e.date.month).toSet();
 
-  Map<String, Iterable<TransactionEntity>> get transactionsByDates {
+  Map<int, Iterable<TransactionEntity>> get transactionsByDates {
     final months = transactionsMonthsList;
-    final Map<String, Iterable<TransactionEntity>> monthsMap = {};
+    final Map<int, Iterable<TransactionEntity>> monthsMap = {};
 
     for (final month in months) {
       monthsMap.addAll({
-        month.toString(): transactions.where(
+        month: transactions.where(
           (item) => item.date.month == month,
         ),
       });
