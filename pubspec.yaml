@@ -25,6 +25,7 @@ dependencies:
   another_flushbar: 1.12.30
   fl_chart: 0.64.0
   intl: 0.17.0
+  uuid: 4.2.2
 
 
 dev_dependencies:

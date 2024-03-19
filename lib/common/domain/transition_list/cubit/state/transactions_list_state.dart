@@ -1,5 +1,6 @@
 import 'package:budget_tracker_app/common/domain/transition_list/model/transaction/transaction_entity.dart';
 import 'package:budget_tracker_app/common/domain/transition_list/model/transaction_category/transaction_category.dart';
+import 'package:budget_tracker_app/utils/date_time_utils.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'transactions_list_state.g.dart';
@@ -40,20 +41,75 @@ extension TransactionsListStateHelper on TransactionsListState {
         ...availableIncomeCategories,
       ];
 
-  Set<int> get transactionsMonthsList =>
-      transactions.map((e) => e.date.month).toSet();
+  Map<String, Iterable<TransactionEntity>> get transactionsByMonthsAndYears {
+    final formattedMonthAndYearList = transactions.map((e) {
+      final date = e.date;
+      return (date, '${DateTimeUtils.getMonthName(date.month)}.${date.year}');
+    }).toSet();
 
-  Map<int, Iterable<TransactionEntity>> get transactionsByDates {
-    final months = transactionsMonthsList;
-    final Map<int, Iterable<TransactionEntity>> monthsMap = {};
-
-    for (final month in months) {
-      monthsMap.addAll({
-        month: transactions.where(
-          (item) => item.date.month == month,
-        ),
+    final Map<String, Iterable<TransactionEntity>> transitionsByMonthYear = {};
+    for (final formattedDate in formattedMonthAndYearList) {
+      transitionsByMonthYear.addAll({
+        formattedDate.$2: transactions.where((item) {
+          final currentDate = formattedDate.$1;
+          final currentItemDate = item.date;
+          return currentItemDate.month == currentDate.month &&
+              currentItemDate.year == currentDate.year;
+        }),
       });
     }
-    return monthsMap;
+    return transitionsByMonthYear;
+  }
+
+  Map<int, double> get incomeTransactionsAmountsByLastYearMonths =>
+      transactionsByLastYearMonths(incomeTransitions).map((key, list) {
+        return MapEntry(
+          key,
+          list.fold(0, (prValue, item) => prValue + item.amount),
+        );
+      });
+
+  Map<int, double> get expenditureTransactionsAmountsByLastYearMonths =>
+      transactionsByLastYearMonths(expenditureTransitions).map((key, list) {
+        return MapEntry(
+          key,
+          list.fold(0, (prValue, item) => prValue + item.amount),
+        );
+      });
+
+  Map<TransactionExpenditureCategory, double>
+      get expenditureTransactionsAmountsByCategories {
+    final result = <TransactionExpenditureCategory, double>{};
+    for (final category in availableExpenditureCategories) {
+      result.addAll({
+        category: expenditureTransitions
+            .where((e) => e.category == category)
+            .fold<double>(0, (prValue, element) => prValue + element.amount),
+      });
+    }
+    return result;
+  }
+
+  Set<int> getMonthsListByYear(int year) => transactions
+      .where((e) => e.date.year == year)
+      .map((e) => e.date.month)
+      .toSet();
+
+  Map<int, Iterable<TransactionEntity>> transactionsByLastYearMonths(
+    Iterable<TransactionEntity> transactions,
+  ) {
+    final year = DateTime.now().year;
+    final months = getMonthsListByYear(year);
+
+    final Map<int, Iterable<TransactionEntity>> result = {};
+    for (final month in months) {
+      result.addAll({
+        month: transactions.where((item) {
+          final currentItemDate = item.date;
+          return currentItemDate.month == month && currentItemDate.year == year;
+        })
+      });
+    }
+    return result;
   }
 }

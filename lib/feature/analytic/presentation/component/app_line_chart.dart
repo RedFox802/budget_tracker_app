@@ -14,22 +14,23 @@ class AnalyticLineChart extends StatelessWidget {
   const AnalyticLineChart({
     required this.incomeData,
     required this.expenditureData,
-    required this.maxAmount,
-    required this.minAmount,
     super.key,
   });
 
-  final Map<int, Iterable<TransactionEntity>> incomeData;
+  final Map<int, double> incomeData;
 
-  final Map<int, Iterable<TransactionEntity>> expenditureData;
-
-  final double maxAmount;
-
-  final double minAmount;
+  final Map<int, double> expenditureData;
 
   @override
   Widget build(BuildContext context) {
     final defaultEmptyTiles = AppChartUtils.defaultEmptyTiles;
+    final maxAmount = max<double>(
+      incomeData.values
+          .fold(0, (prValue, item) => item > prValue ? item : prValue),
+      expenditureData.values
+          .fold(0, (prValue, item) => item > prValue ? item : prValue),
+    );
+
     final verticalStep = AppChartUtils.getVerticalStep(maxAmount);
     final horizontalItemsLength = max(
       incomeData.keys.length.toDouble(),
@@ -102,20 +103,16 @@ class AnalyticLineChart extends StatelessWidget {
   }
 
   LineChartBarData _getChartBarData(
-    Map<int, Iterable<TransactionEntity>> data,
+    Map<int, double> data,
   ) {
     final List<FlSpot> spots = [];
     for (final item in data.keys) {
       final dataItem = data[item];
       if (dataItem != null) {
-        final totalValue = dataItem.fold<double>(
-          0,
-          (previousValue, element) {
-            return previousValue = element.amount.toDouble();
-          },
-        );
-
-        spots.add(FlSpot(item.toDouble(), totalValue));
+        spots.add(FlSpot(
+          item.toDouble(),
+          dataItem,
+        ));
       }
     }
 

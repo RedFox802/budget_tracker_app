@@ -25,7 +25,7 @@ class EditTransactionTypeCard extends StatelessWidget {
         children: [
           const Flexible(
             child: Text(
-              '2) Тип транзакции',
+              '3) Тип транзакции',
               style: AppTextTheme.title,
               overflow: TextOverflow.ellipsis,
             ),

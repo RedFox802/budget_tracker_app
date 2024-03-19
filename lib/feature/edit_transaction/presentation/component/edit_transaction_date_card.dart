@@ -52,7 +52,7 @@ class _EditTransactionDateCardState extends State<EditTransactionDateCard> {
             vertical: -4,
           ),
           title: const Text(
-            '4) Дата выполнения',
+            '5) Дата выполнения',
             style: AppTextTheme.title,
           ),
           subtitle: Padding(

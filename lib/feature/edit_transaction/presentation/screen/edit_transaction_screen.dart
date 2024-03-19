@@ -11,6 +11,7 @@ import 'package:budget_tracker_app/feature/edit_transaction/presentation/compone
 import 'package:budget_tracker_app/feature/edit_transaction/presentation/component/edit_transaction_type_card.dart';
 import 'package:budget_tracker_app/theme/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
@@ -38,6 +39,7 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
       transactionEntity = startEntity;
     } else {
       transactionEntity = TransactionEntity(
+        id: '',
         type: TransactionType.expenditure,
         name: '',
         date: DateTime.now(),
@@ -52,6 +54,8 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
 
   @override
   Widget build(BuildContext context) {
+    const indent = SizedBox(height: 10);
+    final amount = transactionEntity.amount;
     final state = context.read<TransactionsListCubit>().state;
     return Scaffold(
       backgroundColor: AppColors.backgroundPrimary,
@@ -68,15 +72,35 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
         children: [
-          EditTransactionNameCard(
+          indent,
+          EditEnteringValueCard(
             initialValue: transactionEntity.name,
+            title: '1) Краткое название',
+            hint: 'Введите название',
+            keyboardType: TextInputType.name,
             onChanged: (String value) {
               transactionEntity = transactionEntity.copyWith(
                 name: value,
               );
             },
           ),
-          const SizedBox(height: 10),
+          indent,
+          EditEnteringValueCard(
+            initialValue: amount == 0 ? '' : amount.toString(),
+            title: '2) Обьем транзакции',
+            hint: 'Введите значение',
+            keyboardType: TextInputType.number,
+            formatter: FilteringTextInputFormatter.digitsOnly,
+            onChanged: (String value) {
+              final amount = int.tryParse(value);
+              if (amount != null) {
+                transactionEntity = transactionEntity.copyWith(
+                  amount: amount,
+                );
+              }
+            },
+          ),
+          indent,
           EditTransactionTypeCard(
             selectedValue: transactionEntity.type,
             onChanged: (TransactionType? value) {
@@ -87,7 +111,7 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
               });
             },
           ),
-          const SizedBox(height: 10),
+          indent,
           EditTransactionCategoryCard(
             selectedCategory: transactionEntity.category,
             availableCategory:
@@ -102,7 +126,7 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
               });
             },
           ),
-          const SizedBox(height: 10),
+          indent,
           EditTransactionDateCard(
             onChanged: (DateTime value) {
               setState(() {

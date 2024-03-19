@@ -111,7 +111,7 @@ class _DrumPickerState extends State<_DrumPicker> {
         const Padding(
           padding: EdgeInsets.symmetric(vertical: 12),
           child: Text(
-            '3) Выберите категорию транзакции',
+            '4) Выберите категорию транзакции',
             style: AppTextTheme.title,
           ),
         ),
