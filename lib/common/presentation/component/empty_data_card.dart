@@ -6,6 +6,8 @@ class EmptyDataCard extends StatelessWidget {
   const EmptyDataCard({
     required this.title,
     required this.subtitle,
+    this.alignment,
+    this.color,
     super.key,
   });
 
@@ -13,13 +15,19 @@ class EmptyDataCard extends StatelessWidget {
 
   final String subtitle;
 
+  final Alignment? alignment;
+
+  final Color? color;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 16),
       child: CardCircularTopBorderWrapper(
+        color: color,
         padding: const EdgeInsets.all(16),
-        child: Center(
+        child: Align(
+          alignment: alignment ?? Alignment.center,
           child: ListTile(
             title: Text(
               title,

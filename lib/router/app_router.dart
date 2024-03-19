@@ -7,6 +7,7 @@ import 'package:budget_tracker_app/feature/edit_transaction/presentation/screen/
 import 'package:budget_tracker_app/feature/home/presentation/home_router.dart';
 import 'package:budget_tracker_app/feature/home/presentation/screen/home_screen.dart';
 import 'package:budget_tracker_app/feature/transactions_list/presentation/screen/filter_selection_screen.dart';
+import 'package:budget_tracker_app/feature/transactions_list/presentation/screen/search_transactions_screen.dart';
 import 'package:budget_tracker_app/feature/transactions_list/presentation/screen/transitions_list_screen.dart';
 import 'package:budget_tracker_app/feature/transactions_list/presentation/transaction_list_router.dart';
 import 'package:budget_tracker_app/router/nested_route.dart';
@@ -47,6 +48,10 @@ class AppRouter extends _$AppRouter {
         AutoRoute(
           path: '/filters',
           page: FilterSelectionRoute.page,
+        ),
+        AutoRoute(
+          path: '/search',
+          page: SearchTransactionsRoute.page,
         ),
       ];
 }

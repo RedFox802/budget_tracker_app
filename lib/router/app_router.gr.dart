@@ -62,6 +62,12 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const RootScreen(),
       );
     },
+    SearchTransactionsRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const SearchTransactionsScreen(),
+      );
+    },
     TransactionsListNestedRouterRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -195,6 +201,20 @@ class RootRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'RootRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [SearchTransactionsScreen]
+class SearchTransactionsRoute extends PageRouteInfo<void> {
+  const SearchTransactionsRoute({List<PageRouteInfo>? children})
+      : super(
+          SearchTransactionsRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'SearchTransactionsRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

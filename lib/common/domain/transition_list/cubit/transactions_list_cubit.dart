@@ -29,6 +29,24 @@ class TransactionsListCubit extends HydratedCubit<TransactionsListState> {
     emit(state.copyWith(transactions: []));
   }
 
+  void resetSearchedTransactions() {
+    emit(
+      state.copyWith(
+        searchedTransactions: state.transactions,
+      ),
+    );
+  }
+
+  void searchTransactionByName(String? name) {
+    emit(
+      state.copyWith(
+        searchedTransactions: state.transactions.where(
+          (e) => e.name.startsWith(name ?? ''),
+        ),
+      ),
+    );
+  }
+
   void fetchFilteredData(FilterBundle filterBundle) {
     if (filterBundle.isEmptyFilters) {
       return emit(

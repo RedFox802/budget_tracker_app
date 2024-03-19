@@ -5,6 +5,7 @@ import 'package:budget_tracker_app/common/presentation/component/app_bar/custom_
 import 'package:budget_tracker_app/common/presentation/component/card_wrapper/card_circular_border_all_wrapper.dart';
 import 'package:budget_tracker_app/common/presentation/component/empty_data_card.dart';
 import 'package:budget_tracker_app/feature/home/presentation/component/transaction_group_card.dart';
+import 'package:budget_tracker_app/feature/transactions_list/presentation/components/search_text_field.dart';
 import 'package:budget_tracker_app/router/app_router.dart';
 import 'package:budget_tracker_app/theme/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,10 @@ class TransitionsListScreen extends StatelessWidget {
     } else if (listenableState.filteredTransactions.isEmpty) {
       body = Column(
         children: [
-          _FilterButton._(hasFilters: hasFilters),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+            child: _FilterButton._(hasFilters: hasFilters),
+          ),
           const Expanded(
             child: EmptyDataCard(
               title: 'По вашему запросу ничего не найдено',
@@ -42,7 +46,7 @@ class TransitionsListScreen extends StatelessWidget {
       final monthsMap = listenableState.transactionsByMonthsAndYears;
       body = Column(
         children: [
-          _FilterButton._(hasFilters: hasFilters),
+          _DataStateHeader._(hasFilters: hasFilters),
           Expanded(
             child: ListView.builder(
               itemCount: monthsMap.keys.length,
@@ -83,6 +87,38 @@ class TransitionsListScreen extends StatelessWidget {
   }
 }
 
+class _DataStateHeader extends StatelessWidget {
+  const _DataStateHeader._({
+    required this.hasFilters,
+  });
+
+  final bool hasFilters;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: Row(
+        children: [
+          Expanded(
+            child: SearchTextField(
+              hint: 'Начните поиск по названию',
+              readOnly: true,
+              onTap: () {
+                context.router.push(const SearchTransactionsRoute());
+              },
+            ),
+          ),
+          const SizedBox(width: 10),
+          _FilterButton._(
+            hasFilters: hasFilters,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class _FilterButton extends StatelessWidget {
   const _FilterButton._({
     required this.hasFilters,
@@ -94,19 +130,16 @@ class _FilterButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.topRight,
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-        child: CardCircularBorderAllWrapper(
-          padding: EdgeInsets.zero,
-          child: IconButton(
-            icon: Icon(
-              Icons.filter_list_outlined,
-              color: hasFilters ? AppColors.primary100 : AppColors.disabled,
-            ),
-            onPressed: () {
-              appRouter.push(const FilterSelectionRoute());
-            },
+      child: CardCircularBorderAllWrapper(
+        padding: EdgeInsets.zero,
+        child: IconButton(
+          icon: Icon(
+            Icons.filter_list_outlined,
+            color: hasFilters ? AppColors.primary100 : AppColors.disabled,
           ),
+          onPressed: () {
+            context.router.push(const FilterSelectionRoute());
+          },
         ),
       ),
     );

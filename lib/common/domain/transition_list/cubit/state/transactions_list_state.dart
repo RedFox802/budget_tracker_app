@@ -18,6 +18,9 @@ class TransactionsListState with _$TransactionsListState {
     Iterable<TransactionEntity> filteredTransactions,
     @JsonKey(includeFromJson: false, includeToJson: false)
     FilterBundle? filterBundle,
+    @JsonKey(includeFromJson: false, includeToJson: false)
+    @Default([])
+    Iterable<TransactionEntity> searchedTransactions,
     @Default(TransactionCategory.defaultExpenditureValues)
     Iterable<TransactionExpenditureCategory> availableExpenditureCategories,
     @Default(TransactionCategory.defaultIncomeValues)

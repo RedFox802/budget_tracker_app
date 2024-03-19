@@ -28,6 +28,9 @@ mixin _$TransactionsListState {
       throw _privateConstructorUsedError;
   @JsonKey(includeFromJson: false, includeToJson: false)
   FilterBundle? get filterBundle => throw _privateConstructorUsedError;
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  Iterable<TransactionEntity> get searchedTransactions =>
+      throw _privateConstructorUsedError;
   Iterable<TransactionExpenditureCategory> get availableExpenditureCategories =>
       throw _privateConstructorUsedError;
   Iterable<TransactionIncomeCategory> get availableIncomeCategories =>
@@ -51,6 +54,8 @@ abstract class $TransactionsListStateCopyWith<$Res> {
       Iterable<TransactionEntity> filteredTransactions,
       @JsonKey(includeFromJson: false, includeToJson: false)
       FilterBundle? filterBundle,
+      @JsonKey(includeFromJson: false, includeToJson: false)
+      Iterable<TransactionEntity> searchedTransactions,
       Iterable<TransactionExpenditureCategory> availableExpenditureCategories,
       Iterable<TransactionIncomeCategory> availableIncomeCategories});
 
@@ -74,6 +79,7 @@ class _$TransactionsListStateCopyWithImpl<$Res,
     Object? transactions = null,
     Object? filteredTransactions = null,
     Object? filterBundle = freezed,
+    Object? searchedTransactions = null,
     Object? availableExpenditureCategories = null,
     Object? availableIncomeCategories = null,
   }) {
@@ -90,6 +96,10 @@ class _$TransactionsListStateCopyWithImpl<$Res,
           ? _value.filterBundle
           : filterBundle // ignore: cast_nullable_to_non_nullable
               as FilterBundle?,
+      searchedTransactions: null == searchedTransactions
+          ? _value.searchedTransactions
+          : searchedTransactions // ignore: cast_nullable_to_non_nullable
+              as Iterable<TransactionEntity>,
       availableExpenditureCategories: null == availableExpenditureCategories
           ? _value.availableExpenditureCategories
           : availableExpenditureCategories // ignore: cast_nullable_to_non_nullable
@@ -128,6 +138,8 @@ abstract class _$$_TransactionsListStateCopyWith<$Res>
       Iterable<TransactionEntity> filteredTransactions,
       @JsonKey(includeFromJson: false, includeToJson: false)
       FilterBundle? filterBundle,
+      @JsonKey(includeFromJson: false, includeToJson: false)
+      Iterable<TransactionEntity> searchedTransactions,
       Iterable<TransactionExpenditureCategory> availableExpenditureCategories,
       Iterable<TransactionIncomeCategory> availableIncomeCategories});
 
@@ -149,6 +161,7 @@ class __$$_TransactionsListStateCopyWithImpl<$Res>
     Object? transactions = null,
     Object? filteredTransactions = null,
     Object? filterBundle = freezed,
+    Object? searchedTransactions = null,
     Object? availableExpenditureCategories = null,
     Object? availableIncomeCategories = null,
   }) {
@@ -165,6 +178,10 @@ class __$$_TransactionsListStateCopyWithImpl<$Res>
           ? _value.filterBundle
           : filterBundle // ignore: cast_nullable_to_non_nullable
               as FilterBundle?,
+      searchedTransactions: null == searchedTransactions
+          ? _value.searchedTransactions
+          : searchedTransactions // ignore: cast_nullable_to_non_nullable
+              as Iterable<TransactionEntity>,
       availableExpenditureCategories: null == availableExpenditureCategories
           ? _value.availableExpenditureCategories
           : availableExpenditureCategories // ignore: cast_nullable_to_non_nullable
@@ -185,6 +202,8 @@ class _$_TransactionsListState implements _TransactionsListState {
       @JsonKey(includeFromJson: false, includeToJson: false)
       this.filteredTransactions = const [],
       @JsonKey(includeFromJson: false, includeToJson: false) this.filterBundle,
+      @JsonKey(includeFromJson: false, includeToJson: false)
+      this.searchedTransactions = const [],
       this.availableExpenditureCategories =
           TransactionCategory.defaultExpenditureValues,
       this.availableIncomeCategories =
@@ -203,6 +222,9 @@ class _$_TransactionsListState implements _TransactionsListState {
   @JsonKey(includeFromJson: false, includeToJson: false)
   final FilterBundle? filterBundle;
   @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  final Iterable<TransactionEntity> searchedTransactions;
+  @override
   @JsonKey()
   final Iterable<TransactionExpenditureCategory> availableExpenditureCategories;
   @override
@@ -211,7 +233,7 @@ class _$_TransactionsListState implements _TransactionsListState {
 
   @override
   String toString() {
-    return 'TransactionsListState(transactions: $transactions, filteredTransactions: $filteredTransactions, filterBundle: $filterBundle, availableExpenditureCategories: $availableExpenditureCategories, availableIncomeCategories: $availableIncomeCategories)';
+    return 'TransactionsListState(transactions: $transactions, filteredTransactions: $filteredTransactions, filterBundle: $filterBundle, searchedTransactions: $searchedTransactions, availableExpenditureCategories: $availableExpenditureCategories, availableIncomeCategories: $availableIncomeCategories)';
   }
 
   @override
@@ -225,6 +247,8 @@ class _$_TransactionsListState implements _TransactionsListState {
                 .equals(other.filteredTransactions, filteredTransactions) &&
             (identical(other.filterBundle, filterBundle) ||
                 other.filterBundle == filterBundle) &&
+            const DeepCollectionEquality()
+                .equals(other.searchedTransactions, searchedTransactions) &&
             const DeepCollectionEquality().equals(
                 other.availableExpenditureCategories,
                 availableExpenditureCategories) &&
@@ -239,6 +263,7 @@ class _$_TransactionsListState implements _TransactionsListState {
       const DeepCollectionEquality().hash(transactions),
       const DeepCollectionEquality().hash(filteredTransactions),
       filterBundle,
+      const DeepCollectionEquality().hash(searchedTransactions),
       const DeepCollectionEquality().hash(availableExpenditureCategories),
       const DeepCollectionEquality().hash(availableIncomeCategories));
 
@@ -264,6 +289,8 @@ abstract class _TransactionsListState implements TransactionsListState {
       final Iterable<TransactionEntity> filteredTransactions,
       @JsonKey(includeFromJson: false, includeToJson: false)
       final FilterBundle? filterBundle,
+      @JsonKey(includeFromJson: false, includeToJson: false)
+      final Iterable<TransactionEntity> searchedTransactions,
       final Iterable<TransactionExpenditureCategory>
           availableExpenditureCategories,
       final Iterable<TransactionIncomeCategory>
@@ -280,6 +307,9 @@ abstract class _TransactionsListState implements TransactionsListState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   FilterBundle? get filterBundle;
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  Iterable<TransactionEntity> get searchedTransactions;
   @override
   Iterable<TransactionExpenditureCategory> get availableExpenditureCategories;
   @override
