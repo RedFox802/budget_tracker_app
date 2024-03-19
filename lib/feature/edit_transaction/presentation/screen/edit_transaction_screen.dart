@@ -5,6 +5,7 @@ import 'package:budget_tracker_app/common/presentation/component/app_bar/custom_
 import 'package:budget_tracker_app/common/presentation/component/app_error_flush_bar.dart';
 import 'package:budget_tracker_app/common/presentation/component/button/app_elevated_button.dart';
 import 'package:budget_tracker_app/common/presentation/component/card_wrapper/card_circular_border_all_wrapper.dart';
+import 'package:budget_tracker_app/common/presentation/component/card_wrapper/card_circular_top_border_wrapper.dart';
 import 'package:budget_tracker_app/di/service_locator.dart';
 import 'package:budget_tracker_app/feature/edit_transaction/presentation/component/edit_transaction_catagory_card.dart';
 import 'package:budget_tracker_app/feature/edit_transaction/presentation/component/edit_transaction_date_card.dart';
@@ -59,42 +60,18 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
     final amount = transactionEntity.amount;
     final state = context.read<TransactionsListCubit>().state;
     final isNeedDeleteButton = transactionEntity.id.isNotEmpty;
-    final saveButton = SizedBox(
-      width: MediaQuery.sizeOf(context).width - 32,
-      height: 50,
-      child: AppElevatedButton(
-        title: 'Сохранить',
-        onTap: _onSave,
-      ),
-    );
+
     return Scaffold(
       backgroundColor: AppColors.backgroundPrimary,
       appBar: const CustomAppBar(),
-      floatingActionButton: !isNeedDeleteButton
-          ? saveButton
-          : Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Row(
-                children: [
-                  CardCircularBorderAllWrapper(
-                    padding: EdgeInsets.zero,
-                    color: AppColors.primary100,
-                    child: IconButton(
-                      icon: const Icon(
-                        Icons.delete_outline,
-                        color: AppColors.backgroundAndText,
-                      ),
-                      onPressed: _onDelete,
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(child: saveButton),
-                ],
-              ),
-            ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: _ButtonSection._(
+        isNeedDeleteButton: isNeedDeleteButton,
+        onSave: _onSave,
+        onDelete: _onDelete,
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       body: ListView(
-        padding: const EdgeInsets.fromLTRB(16, 10, 16, 40),
+        padding: const EdgeInsets.fromLTRB(16, 16, 16, 100),
         children: [
           EditEnteringValueCard(
             initialValue: transactionEntity.name,
@@ -130,6 +107,9 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
               setState(() {
                 transactionEntity = transactionEntity.copyWith(
                   type: value ?? TransactionType.expenditure,
+                  category: value == TransactionType.expenditure
+                      ? state.availableExpenditureCategories.first
+                      : state.availableIncomeCategories.first,
                 );
               });
             },
@@ -160,7 +140,6 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
             },
             selectedValue: transactionEntity.date,
           ),
-          const SizedBox(height: 60),
         ],
       ),
     );
@@ -171,6 +150,14 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
       showFlushBarError(
         context,
         text: 'Пожалуйста введите название операции!',
+      );
+      return false;
+    }
+
+    if (transactionEntity.amount == 0) {
+      showFlushBarError(
+        context,
+        text: 'Пожалуйста введите обьем транзакции!',
       );
       return false;
     }
@@ -193,5 +180,55 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
         );
 
     context.router.pop();
+  }
+}
+
+class _ButtonSection extends StatelessWidget {
+  const _ButtonSection._({
+    required this.isNeedDeleteButton,
+    required this.onSave,
+    required this.onDelete,
+  });
+
+  final bool isNeedDeleteButton;
+
+  final VoidCallback onSave;
+
+  final VoidCallback onDelete;
+
+  @override
+  Widget build(BuildContext context) {
+    final saveButton = SizedBox(
+      width: MediaQuery.sizeOf(context).width,
+      height: 50,
+      child: AppElevatedButton(
+        title: 'Сохранить',
+        onTap: onSave,
+      ),
+    );
+
+    return CardCircularTopBorderWrapper(
+      padding: const EdgeInsets.all(16),
+      borderColor: AppColors.primary40,
+      child: !isNeedDeleteButton
+          ? saveButton
+          : Row(
+              children: [
+                CardCircularBorderAllWrapper(
+                  padding: EdgeInsets.zero,
+                  color: AppColors.primary100,
+                  child: IconButton(
+                    icon: const Icon(
+                      Icons.delete_outline,
+                      color: AppColors.backgroundAndText,
+                    ),
+                    onPressed: onDelete,
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Expanded(child: saveButton),
+              ],
+            ),
+    );
   }
 }

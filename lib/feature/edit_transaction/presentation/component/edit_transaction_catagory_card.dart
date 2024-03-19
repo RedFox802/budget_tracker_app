@@ -27,7 +27,7 @@ class EditTransactionCategoryCard extends StatefulWidget {
 
 class _EditTransactionCategoryCardState
     extends State<EditTransactionCategoryCard> {
-  bool _showPicker = false;
+  bool _showPicker = true;
 
   @override
   Widget build(BuildContext context) {
@@ -115,7 +115,6 @@ class _DrumPickerState extends State<_DrumPicker> {
             style: AppTextTheme.title,
           ),
         ),
-        const SizedBox(height: 16),
         CustomPicker(
           onSelectedItemChanged: (index) {
             setState(() {
@@ -133,7 +132,6 @@ class _DrumPickerState extends State<_DrumPicker> {
               )
               .toList(),
         ),
-        const SizedBox(height: 16),
         SizedBox(
           height: 52,
           child: AppElevatedButton(
