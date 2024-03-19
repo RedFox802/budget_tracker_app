@@ -17,6 +17,7 @@ class TransitionsListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final listenableState = context.watch<TransactionsListCubit>().state;
+    final hasFilters = listenableState.filterBundle != null;
 
     Widget body;
     if (listenableState.transactions.isEmpty) {
@@ -27,26 +28,7 @@ class TransitionsListScreen extends StatelessWidget {
     } else if (listenableState.filteredTransactions.isEmpty) {
       body = Column(
         children: [
-          Align(
-            alignment: Alignment.topRight,
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-              child: CardCircularBorderAllWrapper(
-                padding: EdgeInsets.zero,
-                child: IconButton(
-                  icon: Icon(
-                    Icons.filter_list_outlined,
-                    color: listenableState.filterBundle != null
-                        ? AppColors.primary100
-                        : AppColors.disabled,
-                  ),
-                  onPressed: () {
-                    appRouter.push(const FilterSelectionRoute());
-                  },
-                ),
-              ),
-            ),
-          ),
+          _FilterButton._(hasFilters: hasFilters),
           const Expanded(
             child: EmptyDataCard(
               title: 'По вашему запросу ничего не найдено',
@@ -58,36 +40,15 @@ class TransitionsListScreen extends StatelessWidget {
       );
     } else {
       final monthsMap = listenableState.transactionsByMonthsAndYears;
-
       body = Column(
         children: [
-          Align(
-            alignment: Alignment.topRight,
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: CardCircularBorderAllWrapper(
-                padding: EdgeInsets.zero,
-                child: IconButton(
-                  icon: Icon(
-                    Icons.filter_list_outlined,
-                    color: listenableState.filterBundle != null
-                        ? AppColors.primary100
-                        : AppColors.disabled,
-                  ),
-                  onPressed: () {
-                    appRouter.push(const FilterSelectionRoute());
-                  },
-                ),
-              ),
-            ),
-          ),
+          _FilterButton._(hasFilters: hasFilters),
           Expanded(
             child: ListView.builder(
               itemCount: monthsMap.keys.length,
               itemBuilder: (context, index) {
                 final currentKey = monthsMap.keys.elementAt(index);
                 final currentItem = monthsMap[currentKey];
-
                 if (currentItem != null) {
                   return TransactionGroupCard(
                     groupName: currentKey,
@@ -109,13 +70,45 @@ class TransitionsListScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         backgroundColor: AppColors.primary100,
         child: const Icon(Icons.add),
-        onPressed: () {
-          context.router.push(
-            EditTransactionRoute(),
-          );
-        },
+        onPressed: () => _onAddTransition(context),
       ),
       body: body,
+    );
+  }
+
+  void _onAddTransition(BuildContext context) {
+    context.router.push(
+      EditTransactionRoute(),
+    );
+  }
+}
+
+class _FilterButton extends StatelessWidget {
+  const _FilterButton._({
+    required this.hasFilters,
+  });
+
+  final bool hasFilters;
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.topRight,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+        child: CardCircularBorderAllWrapper(
+          padding: EdgeInsets.zero,
+          child: IconButton(
+            icon: Icon(
+              Icons.filter_list_outlined,
+              color: hasFilters ? AppColors.primary100 : AppColors.disabled,
+            ),
+            onPressed: () {
+              appRouter.push(const FilterSelectionRoute());
+            },
+          ),
+        ),
+      ),
     );
   }
 }
