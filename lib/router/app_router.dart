@@ -6,8 +6,6 @@ import 'package:budget_tracker_app/feature/analytic/presentation/screen/analytic
 import 'package:budget_tracker_app/feature/edit_transaction/presentation/screen/edit_transaction_screen.dart';
 import 'package:budget_tracker_app/feature/home/presentation/home_router.dart';
 import 'package:budget_tracker_app/feature/home/presentation/screen/home_screen.dart';
-import 'package:budget_tracker_app/feature/profile/presentation/profile_router.dart';
-import 'package:budget_tracker_app/feature/profile/presentation/screen/profile_screen.dart';
 import 'package:budget_tracker_app/feature/transactions_list/presentation/screen/transitions_list_screen.dart';
 import 'package:budget_tracker_app/feature/transactions_list/presentation/transaction_list_router.dart';
 import 'package:budget_tracker_app/router/nested_route.dart';
@@ -19,7 +17,6 @@ enum AppRouterTabs {
   home,
   transactionsList,
   analytic,
-  profile,
 }
 
 final appRouter = AppRouter();
@@ -40,7 +37,6 @@ class AppRouter extends _$AppRouter {
             HomeRouter.router,
             TransactionListRouter.router,
             AnalyticRouter.router,
-            ProfileRouter.router,
           ],
         ),
         AutoRoute(

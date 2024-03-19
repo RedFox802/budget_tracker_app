@@ -17,7 +17,6 @@ class RootScreen extends StatelessWidget {
         HomeNestedRouterRoute(),
         TransactionsListNestedRouterRoute(),
         AnalyticNestedRouterRoute(),
-        ProfileNestedRouterRoute(),
       ],
       bottomNavigationBuilder: (_, tabsRouter) {
         return Material(
@@ -88,17 +87,6 @@ class RootScreen extends StatelessWidget {
                       color: unselectedColor,
                     ),
                     label: 'Аналитика',
-                  ),
-                  BottomNavigationBarItem(
-                    activeIcon: Icon(
-                      Icons.person,
-                      color: selectedColor,
-                    ),
-                    icon: Icon(
-                      Icons.person,
-                      color: unselectedColor,
-                    ),
-                    label: 'Профиль',
                   ),
                 ],
               ),

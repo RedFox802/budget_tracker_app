@@ -11,11 +11,6 @@ class TransactionsListNestedRouterScreen extends AutoRouter {
 }
 
 @RoutePage()
-class ProfileNestedRouterScreen extends AutoRouter {
-  const ProfileNestedRouterScreen({super.key});
-}
-
-@RoutePage()
 class AnalyticNestedRouterScreen extends AutoRouter {
   const AnalyticNestedRouterScreen({super.key});
 }
