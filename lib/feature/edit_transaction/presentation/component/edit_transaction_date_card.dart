@@ -44,7 +44,9 @@ class _EditTransactionDateCardState extends State<EditTransactionDateCard> {
       child: AnimatedCrossFade(
         crossFadeState:
             _showPicker ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-        duration: const Duration(milliseconds: 300),
+        firstCurve: Curves.fastOutSlowIn,
+        secondCurve: Curves.fastOutSlowIn,
+        duration: const Duration(milliseconds: 400),
         firstChild: _DrumPicker._(
           title: widget.enteringTitle,
           selectedValue: selectedValue ?? DateTime.now(),

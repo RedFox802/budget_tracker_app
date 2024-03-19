@@ -37,22 +37,28 @@ class _TransactionGroupCardState extends State<TransactionGroupCard> {
       },
     );
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 2),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
       child: CardCircularBorderAllWrapper(
         padding: const EdgeInsets.all(16),
-        child: !isOpened
-            ? header
-            : Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  header,
-                  const SizedBox(height: 10),
-                  ...transactions.map(
-                    (e) => TransactionCard(transaction: e),
-                  ),
-                ],
+        child: AnimatedCrossFade(
+          duration: const Duration(milliseconds: 400),
+          firstCurve: Curves.easeIn,
+          secondCurve: Curves.easeIn,
+          crossFadeState:
+              isOpened ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+          firstChild: header,
+          secondChild: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              header,
+              const SizedBox(height: 10),
+              ...transactions.map(
+                (e) => TransactionCard(transaction: e),
               ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -79,15 +85,13 @@ class _TransactionGroupHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Flexible(
-          child: Text(
-            title,
-            style: AppTextTheme.title,
-            overflow: TextOverflow.ellipsis,
-          ),
+        Text(
+          title,
+          style: AppTextTheme.title,
+          overflow: TextOverflow.ellipsis,
         ),
+        const Spacer(),
         InkWell(
           overlayColor: MaterialStateColor.resolveWith(
             (states) => Colors.transparent,

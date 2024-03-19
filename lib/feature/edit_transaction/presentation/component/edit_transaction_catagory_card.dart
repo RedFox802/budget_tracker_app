@@ -49,9 +49,11 @@ class _EditTransactionCategoryCardState
           ? const EdgeInsets.symmetric(vertical: 16)
           : const EdgeInsets.all(16),
       child: AnimatedCrossFade(
+        firstCurve: Curves.fastOutSlowIn,
+        secondCurve: Curves.fastOutSlowIn,
+        duration: const Duration(milliseconds: 400),
         crossFadeState:
             _showPicker ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-        duration: const Duration(milliseconds: 300),
         firstChild: _DrumPicker._(
           title: widget.enteringTitle,
           selectedCategory: selectedCategory,
