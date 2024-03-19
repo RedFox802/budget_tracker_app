@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 
 class AppChartWrapper extends StatelessWidget {
   const AppChartWrapper({
-    super.key,
     required this.title,
     required this.chartWidget,
+    super.key,
   });
 
   final String title;
@@ -16,10 +16,7 @@ class AppChartWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CardCircularBorderAllWrapper(
-      padding: const EdgeInsets.symmetric(
-        vertical: 20,
-        horizontal: 10,
-      ),
+      padding: const EdgeInsets.all(10),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,7 +33,10 @@ class AppChartWrapper extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 30),
-          chartWidget,
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: chartWidget,
+          ),
         ],
       ),
     );

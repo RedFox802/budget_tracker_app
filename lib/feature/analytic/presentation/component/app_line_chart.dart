@@ -2,9 +2,13 @@ import 'dart:math';
 
 import 'package:budget_tracker_app/common/domain/transition_list/model/transaction/transaction_entity.dart';
 import 'package:budget_tracker_app/theme/app_colors.dart';
+import 'package:budget_tracker_app/theme/app_text_theme.dart';
+import 'package:budget_tracker_app/utils/app_chart_utils.dart';
 import 'package:budget_tracker_app/utils/date_time_utils.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+
+import 'app_chart_wrapper.dart';
 
 class AnalyticLineChart extends StatelessWidget {
   const AnalyticLineChart({
@@ -23,61 +27,40 @@ class AnalyticLineChart extends StatelessWidget {
 
   final double minAmount;
 
-  AxisTitles get _defaultEmptyTiles => const AxisTitles(
-        sideTitles: SideTitles(showTitles: false),
-      );
-
-  Border get _chartBorder {
-    const defaultBorder = BorderSide(color: Colors.transparent);
-    const accentBorder = BorderSide(color: AppColors.primary100);
-    return const Border(
-      bottom: accentBorder,
-      left: accentBorder,
-      right: defaultBorder,
-      top: defaultBorder,
-    );
-  }
-
-  double get _step {
-    const partCount = 6;
-    return (maxAmount - minAmount) / partCount;
-  }
-
-  double get horizontalItemsLength => max(
-        incomeData.keys.length.toDouble(),
-        expenditureData.keys.length.toDouble(),
-      );
-
   @override
   Widget build(BuildContext context) {
-    final incomeLine = _getChartBarData(incomeData);
-    final expenditureLine = _getChartBarData(expenditureData);
-    final verticalStep = _step;
+    final defaultEmptyTiles = AppChartUtils.defaultEmptyTiles;
+    final verticalStep = AppChartUtils.getVerticalStep(maxAmount);
+    final horizontalItemsLength = max(
+      incomeData.keys.length.toDouble(),
+      expenditureData.keys.length.toDouble(),
+    );
 
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: ConstrainedBox(
+    return AppChartWrapper(
+      title: 'Статиcтика по расходам и доходам',
+      chartWidget: ConstrainedBox(
         constraints: BoxConstraints(
           maxHeight: 250,
           maxWidth: horizontalItemsLength * 80,
         ),
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.fromLTRB(0, 10, 10, 0),
           child: LineChart(
             LineChartData(
+              minY: 0,
               maxY: maxAmount,
               maxX: horizontalItemsLength,
               lineBarsData: [
-                incomeLine,
-                expenditureLine,
+                _getChartBarData(incomeData),
+                _getChartBarData(expenditureData),
               ],
               titlesData: FlTitlesData(
-                leftTitles: _getVerticalTiles(
-                  step: verticalStep,
+                leftTitles: AppChartUtils.getVerticalTiles(
+                  verticalStep,
                 ),
                 bottomTitles: _getHorizontalTiles(),
-                topTitles: _defaultEmptyTiles,
-                rightTitles: _defaultEmptyTiles,
+                topTitles: defaultEmptyTiles,
+                rightTitles: defaultEmptyTiles,
               ),
               lineTouchData: const LineTouchData(
                 enabled: false,
@@ -85,11 +68,11 @@ class AnalyticLineChart extends StatelessWidget {
               gridData: FlGridData(
                 show: true,
                 verticalInterval: 1,
-                horizontalInterval: _step,
+                horizontalInterval: verticalStep,
               ),
               borderData: FlBorderData(
                 show: true,
-                border: _chartBorder,
+                border: AppChartUtils.chartBorder,
               ),
             ),
           ),
@@ -110,6 +93,7 @@ class AnalyticLineChart extends StatelessWidget {
             child: Text(
               DateTimeUtils.getMonthName(value.toInt()),
               textAlign: TextAlign.center,
+              style: AppTextTheme.regular,
             ),
           );
         },
@@ -117,25 +101,9 @@ class AnalyticLineChart extends StatelessWidget {
     );
   }
 
-  // TODO: step
-  AxisTitles _getVerticalTiles({
-    required double step,
-  }) {
-    return AxisTitles(
-      sideTitles: SideTitles(
-        showTitles: true,
-        interval: _step,
-        reservedSize: 60,
-        getTitlesWidget: (value, _) => Text(
-          ((value / step)*step).round().toString(),
-          textAlign: TextAlign.center,
-        ),
-      ),
-    );
-  }
-
   LineChartBarData _getChartBarData(
-      Map<int, Iterable<TransactionEntity>> data) {
+    Map<int, Iterable<TransactionEntity>> data,
+  ) {
     final List<FlSpot> spots = [];
     for (final item in data.keys) {
       final dataItem = data[item];
@@ -150,16 +118,18 @@ class AnalyticLineChart extends StatelessWidget {
         spots.add(FlSpot(item.toDouble(), totalValue));
       }
     }
+
+    const color = AppColors.primary100;
     return LineChartBarData(
       spots: spots,
       barWidth: 2,
       isCurved: true,
       isStrokeCapRound: false,
       dotData: const FlDotData(show: false),
-      color: AppColors.primary100.withOpacity(0.5),
+      color: color.withOpacity(0.5),
       belowBarData: BarAreaData(
         show: true,
-        color: AppColors.primary100.withOpacity(0.2),
+        color: color.withOpacity(0.2),
       ),
     );
   }
