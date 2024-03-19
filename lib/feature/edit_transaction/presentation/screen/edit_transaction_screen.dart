@@ -4,6 +4,7 @@ import 'package:budget_tracker_app/common/domain/transition_list/model/transacti
 import 'package:budget_tracker_app/common/presentation/component/app_bar/custom_app_bar.dart';
 import 'package:budget_tracker_app/common/presentation/component/app_error_flush_bar.dart';
 import 'package:budget_tracker_app/common/presentation/component/button/app_elevated_button.dart';
+import 'package:budget_tracker_app/common/presentation/component/card_wrapper/card_circular_border_all_wrapper.dart';
 import 'package:budget_tracker_app/di/service_locator.dart';
 import 'package:budget_tracker_app/feature/edit_transaction/presentation/component/edit_transaction_catagory_card.dart';
 import 'package:budget_tracker_app/feature/edit_transaction/presentation/component/edit_transaction_date_card.dart';
@@ -57,22 +58,44 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
     const indent = SizedBox(height: 10);
     final amount = transactionEntity.amount;
     final state = context.read<TransactionsListCubit>().state;
+    final isNeedDeleteButton = transactionEntity.id.isNotEmpty;
+    final saveButton = SizedBox(
+      width: MediaQuery.sizeOf(context).width - 32,
+      height: 50,
+      child: AppElevatedButton(
+        title: 'Сохранить',
+        onTap: _onSave,
+      ),
+    );
     return Scaffold(
       backgroundColor: AppColors.backgroundPrimary,
       appBar: const CustomAppBar(),
-      floatingActionButton: SizedBox(
-        width: MediaQuery.sizeOf(context).width - 32,
-        height: 50,
-        child: AppElevatedButton(
-          title: 'Сохранить',
-          onTap: _onSave,
-        ),
-      ),
+      floatingActionButton: !isNeedDeleteButton
+          ? saveButton
+          : Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                children: [
+                  CardCircularBorderAllWrapper(
+                    padding: EdgeInsets.zero,
+                    color: AppColors.primary100,
+                    child: IconButton(
+                      icon: const Icon(
+                        Icons.delete_outline,
+                        color: AppColors.backgroundAndText,
+                      ),
+                      onPressed: _onDelete,
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(child: saveButton),
+                ],
+              ),
+            ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+        padding: const EdgeInsets.fromLTRB(16, 10, 16, 40),
         children: [
-          indent,
           EditEnteringValueCard(
             initialValue: transactionEntity.name,
             title: '1) Краткое название',
@@ -153,6 +176,14 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
     }
 
     return true;
+  }
+
+  void _onDelete() {
+    context.read<TransactionsListCubit>().deleteTransaction(
+          transactionEntity,
+        );
+
+    context.router.pop();
   }
 
   void _onSave() {

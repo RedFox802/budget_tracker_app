@@ -44,7 +44,7 @@ extension TransactionsListStateHelper on TransactionsListState {
   Map<String, Iterable<TransactionEntity>> get transactionsByMonthsAndYears {
     final formattedMonthAndYearList = transactions.map((e) {
       final date = e.date;
-      return (date, '${DateTimeUtils.getMonthName(date.month)}.${date.year}');
+      return (date, '${DateTimeUtils.getMonthName(date.month)} ${date.year}');
     }).toSet();
 
     final Map<String, Iterable<TransactionEntity>> transitionsByMonthYear = {};

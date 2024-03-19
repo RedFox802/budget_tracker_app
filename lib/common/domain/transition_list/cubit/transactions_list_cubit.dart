@@ -18,15 +18,27 @@ class TransactionsListCubit extends HydratedCubit<TransactionsListState> {
     return state.toJson();
   }
 
-  void init(){
+  void init() {
     emit(state.copyWith(transactions: []));
+  }
+
+  void deleteTransaction(TransactionEntity transaction) {
+    final transactionList = state.transactions.toList();
+    if (transactionList.contains(transaction)) {
+      transactionList.remove(transaction);
+      emit(state.copyWith(
+        transactions: transactionList,
+      ));
+    }
   }
 
   void addTransaction(TransactionEntity transaction) {
     final currentTransactionList =
         List<TransactionEntity>.from(state.transactions);
 
-    final elementIndex = currentTransactionList.indexOf(transaction);
+    final elementIndex =
+        currentTransactionList.indexWhere((e) => e.id == transaction.id);
+
     if (elementIndex >= 0) {
       currentTransactionList
         ..removeAt(elementIndex)

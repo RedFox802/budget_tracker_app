@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:budget_tracker_app/common/domain/transition_list/model/transaction/transaction_entity.dart';
 import 'package:budget_tracker_app/theme/app_colors.dart';
 import 'package:budget_tracker_app/theme/app_text_theme.dart';
 import 'package:budget_tracker_app/utils/app_chart_utils.dart';
