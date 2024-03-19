@@ -4,7 +4,7 @@ import 'package:budget_tracker_app/common/domain/transition_list/model/transacti
 import 'package:budget_tracker_app/common/presentation/component/app_bar/custom_app_bar.dart';
 import 'package:budget_tracker_app/common/presentation/component/empty_data_card.dart';
 import 'package:budget_tracker_app/di/service_locator.dart';
-import 'package:budget_tracker_app/feature/transactions_list/presentation/components/search_text_field.dart';
+import 'package:budget_tracker_app/feature/search/presentation/component/search_text_field.dart';
 import 'package:budget_tracker_app/feature/transactions_list/presentation/components/transaction_card.dart';
 import 'package:budget_tracker_app/theme/app_colors.dart';
 import 'package:flutter/material.dart';

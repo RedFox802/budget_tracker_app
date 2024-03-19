@@ -4,8 +4,8 @@ import 'package:budget_tracker_app/common/domain/transition_list/cubit/transacti
 import 'package:budget_tracker_app/common/presentation/component/app_bar/custom_app_bar.dart';
 import 'package:budget_tracker_app/common/presentation/component/card_wrapper/card_circular_border_all_wrapper.dart';
 import 'package:budget_tracker_app/common/presentation/component/empty_data_card.dart';
-import 'package:budget_tracker_app/feature/home/presentation/component/transaction_group_card.dart';
-import 'package:budget_tracker_app/feature/transactions_list/presentation/components/search_text_field.dart';
+import 'package:budget_tracker_app/feature/transactions_list/presentation/components/transaction_group_card.dart';
+import 'package:budget_tracker_app/feature/search/presentation/component/search_text_field.dart';
 import 'package:budget_tracker_app/router/app_router.dart';
 import 'package:budget_tracker_app/theme/app_colors.dart';
 import 'package:flutter/material.dart';

@@ -5,7 +5,7 @@ import 'package:budget_tracker_app/common/presentation/component/app_bar/custom_
 import 'package:budget_tracker_app/feature/home/presentation/component/budget_card.dart';
 import 'package:budget_tracker_app/feature/home/presentation/component/budget_limit_card.dart';
 import 'package:budget_tracker_app/feature/home/presentation/component/exceeding_spending_limit_warning_card.dart';
-import 'package:budget_tracker_app/feature/home/presentation/component/transaction_group_card.dart';
+import 'package:budget_tracker_app/feature/transactions_list/presentation/components/transaction_group_card.dart';
 import 'package:budget_tracker_app/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

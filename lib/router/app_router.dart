@@ -6,8 +6,8 @@ import 'package:budget_tracker_app/feature/analytic/presentation/screen/analytic
 import 'package:budget_tracker_app/feature/edit_transaction/presentation/screen/edit_transaction_screen.dart';
 import 'package:budget_tracker_app/feature/home/presentation/home_router.dart';
 import 'package:budget_tracker_app/feature/home/presentation/screen/home_screen.dart';
-import 'package:budget_tracker_app/feature/transactions_list/presentation/screen/filter_selection_screen.dart';
-import 'package:budget_tracker_app/feature/transactions_list/presentation/screen/search_transactions_screen.dart';
+import 'package:budget_tracker_app/feature/filters/presentation/filter_selection_screen.dart';
+import 'package:budget_tracker_app/feature/search/presentation/screen/search_transactions_screen.dart';
 import 'package:budget_tracker_app/feature/transactions_list/presentation/screen/transitions_list_screen.dart';
 import 'package:budget_tracker_app/feature/transactions_list/presentation/transaction_list_router.dart';
 import 'package:budget_tracker_app/router/nested_route.dart';
@@ -41,17 +41,23 @@ class AppRouter extends _$AppRouter {
             AnalyticRouter.router,
           ],
         ),
-        AutoRoute(
+        CustomRoute(
           path: '/editTransition',
           page: EditTransactionRoute.page,
+          transitionsBuilder: TransitionsBuilders.slideBottom,
+          durationInMilliseconds: 300,
         ),
-        AutoRoute(
+        CustomRoute(
           path: '/filters',
           page: FilterSelectionRoute.page,
+          transitionsBuilder: TransitionsBuilders.slideBottom,
+          durationInMilliseconds: 300,
         ),
-        AutoRoute(
+        CustomRoute(
           path: '/search',
           page: SearchTransactionsRoute.page,
+          transitionsBuilder: TransitionsBuilders.fadeIn,
+          durationInMilliseconds: 300,
         ),
       ];
 }
