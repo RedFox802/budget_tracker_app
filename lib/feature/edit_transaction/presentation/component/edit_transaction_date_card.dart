@@ -10,12 +10,21 @@ class EditTransactionDateCard extends StatefulWidget {
   const EditTransactionDateCard({
     required this.onChanged,
     required this.selectedValue,
+    required this.title,
+    required this.enteringTitle,
+    this.needClearButton = false,
     super.key,
   });
 
-  final DateTime selectedValue;
+  final bool needClearButton;
 
-  final ValueChanged<DateTime> onChanged;
+  final DateTime? selectedValue;
+
+  final String title;
+
+  final String enteringTitle;
+
+  final ValueChanged<DateTime?> onChanged;
 
   @override
   State<EditTransactionDateCard> createState() =>
@@ -23,10 +32,11 @@ class EditTransactionDateCard extends StatefulWidget {
 }
 
 class _EditTransactionDateCardState extends State<EditTransactionDateCard> {
-  bool _showPicker = false;
+  bool _showPicker = true;
 
   @override
   Widget build(BuildContext context) {
+    final selectedValue = widget.selectedValue;
     return CardCircularBorderAllWrapper(
       padding: !_showPicker
           ? const EdgeInsets.symmetric(vertical: 16)
@@ -36,7 +46,8 @@ class _EditTransactionDateCardState extends State<EditTransactionDateCard> {
             _showPicker ? CrossFadeState.showFirst : CrossFadeState.showSecond,
         duration: const Duration(milliseconds: 300),
         firstChild: _DrumPicker._(
-          selectedValue: widget.selectedValue,
+          title: widget.enteringTitle,
+          selectedValue: selectedValue ?? DateTime.now(),
           onButtonPressed: (answer) {
             setState(
               () {
@@ -51,14 +62,16 @@ class _EditTransactionDateCardState extends State<EditTransactionDateCard> {
             horizontal: -4,
             vertical: -4,
           ),
-          title: const Text(
-            '5) Дата выполнения',
+          title: Text(
+            widget.title,
             style: AppTextTheme.title,
           ),
           subtitle: Padding(
-            padding: const EdgeInsets.only(top: 6, left: 18),
+            padding: const EdgeInsets.only(top: 6),
             child: Text(
-              widget.selectedValue.formattedDate,
+              selectedValue != null
+                  ? selectedValue.formattedDate
+                  : 'Не выбрано',
               style: AppTextTheme.regular,
             ),
           ),
@@ -67,9 +80,36 @@ class _EditTransactionDateCardState extends State<EditTransactionDateCard> {
               _showPicker = true;
             });
           },
-          trailing: const Icon(
-            Icons.edit,
-            color: AppColors.primary100,
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Flexible(
+                child: Icon(
+                  Icons.edit,
+                  color: AppColors.primary100,
+                ),
+              ),
+              if (selectedValue != null && widget.needClearButton)
+                Flexible(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: IconButton(
+                      padding: EdgeInsets.zero,
+                      visualDensity: const VisualDensity(
+                        vertical: -4,
+                        horizontal: -4,
+                      ),
+                      onPressed: () => setState(() {
+                        widget.onChanged(null);
+                      }),
+                      icon: const Icon(
+                        Icons.delete_outline,
+                        color: AppColors.primary100,
+                      ),
+                    ),
+                  ),
+                )
+            ],
           ),
         ),
       ),
@@ -81,9 +121,12 @@ class _DrumPicker extends StatefulWidget {
   const _DrumPicker._({
     required this.selectedValue,
     required this.onButtonPressed,
+    required this.title,
   });
 
   final DateTime selectedValue;
+
+  final String title;
 
   final ValueChanged<DateTime> onButtonPressed;
 
@@ -100,10 +143,10 @@ class _DrumPickerState extends State<_DrumPicker> {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const Padding(
-          padding: EdgeInsets.symmetric(vertical: 12),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 12),
           child: Text(
-            '4) Выберите дату выполнения',
+            widget.title,
             style: AppTextTheme.title,
           ),
         ),
@@ -111,6 +154,7 @@ class _DrumPickerState extends State<_DrumPicker> {
         SizedBox(
           height: 100,
           child: CupertinoDatePicker(
+            initialDateTime: _selectedItem,
             mode: CupertinoDatePickerMode.date,
             onDateTimeChanged: (date) {
               setState(() {

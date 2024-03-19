@@ -36,21 +36,24 @@ class _TransactionGroupCardState extends State<TransactionGroupCard> {
         });
       },
     );
-    return CardCircularBorderAllWrapper(
-      padding: const EdgeInsets.all(16),
-      child: !isOpened
-          ? header
-          : Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                header,
-                const SizedBox(height: 10),
-                ...transactions.map(
-                  (e) => TransactionCard(transaction: e),
-                ),
-              ],
-            ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 2),
+      child: CardCircularBorderAllWrapper(
+        padding: const EdgeInsets.all(16),
+        child: !isOpened
+            ? header
+            : Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  header,
+                  const SizedBox(height: 10),
+                  ...transactions.map(
+                    (e) => TransactionCard(transaction: e),
+                  ),
+                ],
+              ),
+      ),
     );
   }
 }

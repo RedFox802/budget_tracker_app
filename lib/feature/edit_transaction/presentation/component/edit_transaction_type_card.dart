@@ -8,12 +8,20 @@ class EditTransactionTypeCard extends StatelessWidget {
   const EditTransactionTypeCard({
     required this.selectedValue,
     required this.onChanged,
+    required this.title,
+    this.needClearButton = false,
     super.key,
   });
 
-  final TransactionType selectedValue;
+  final TransactionType? selectedValue;
+
+  final String title;
 
   final ValueChanged<TransactionType?> onChanged;
+
+  final bool needClearButton;
+
+  bool get showClearButton => selectedValue != null && needClearButton;
 
   @override
   Widget build(BuildContext context) {
@@ -23,12 +31,30 @@ class EditTransactionTypeCard extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Flexible(
-            child: Text(
-              '3) Тип транзакции',
-              style: AppTextTheme.title,
-              overflow: TextOverflow.ellipsis,
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Flexible(
+                child: Text(
+                  title,
+                  style: AppTextTheme.title,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              if (showClearButton)
+                IconButton(
+                  padding: EdgeInsets.zero,
+                  visualDensity: const VisualDensity(
+                    vertical: -4,
+                    horizontal: -4,
+                  ),
+                  onPressed: () => onChanged(null),
+                  icon: const Icon(
+                    Icons.delete_outline,
+                    color: AppColors.primary100,
+                  ),
+                )
+            ],
           ),
           const SizedBox(height: 10),
           _RadioRow._(
@@ -56,7 +82,7 @@ class _RadioRow extends StatelessWidget {
 
   final TransactionType value;
 
-  final TransactionType selectedValue;
+  final TransactionType? selectedValue;
 
   final ValueChanged<TransactionType?> onChanged;
 

@@ -102,6 +102,7 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
           ),
           indent,
           EditTransactionTypeCard(
+            title: '3) Тип транзакции',
             selectedValue: transactionEntity.type,
             onChanged: (TransactionType? value) {
               setState(() {
@@ -116,27 +117,35 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
           ),
           indent,
           EditTransactionCategoryCard(
+            title: '4) Категория',
+            enteringTitle: 'Выберите категорию',
             selectedCategory: transactionEntity.category,
             availableCategory:
                 transactionEntity.type == TransactionType.expenditure
                     ? state.availableExpenditureCategories
                     : state.availableIncomeCategories,
             onChanged: (value) {
-              setState(() {
-                transactionEntity = transactionEntity.copyWith(
-                  category: value,
-                );
-              });
+              if (value != null) {
+                setState(() {
+                  transactionEntity = transactionEntity.copyWith(
+                    category: value,
+                  );
+                });
+              }
             },
           ),
           indent,
           EditTransactionDateCard(
-            onChanged: (DateTime value) {
-              setState(() {
-                transactionEntity = transactionEntity.copyWith(
-                  date: value,
-                );
-              });
+            title: '5) Дата проведения транзакции',
+            enteringTitle: '5) Выберите дату транзакции',
+            onChanged: (DateTime? value) {
+              if (value != null) {
+                setState(() {
+                  transactionEntity = transactionEntity.copyWith(
+                    date: value,
+                  );
+                });
+              }
             },
             selectedValue: transactionEntity.date,
           ),

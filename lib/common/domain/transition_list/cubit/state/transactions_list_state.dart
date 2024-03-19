@@ -1,3 +1,5 @@
+// ignore_for_file:invalid_annotation_target
+import 'package:budget_tracker_app/common/domain/transition_list/model/filter/filter_bundle.dart';
 import 'package:budget_tracker_app/common/domain/transition_list/model/transaction/transaction_entity.dart';
 import 'package:budget_tracker_app/common/domain/transition_list/model/transaction_category/transaction_category.dart';
 import 'package:budget_tracker_app/utils/date_time_utils.dart';
@@ -11,6 +13,11 @@ part 'transactions_list_state.freezed.dart';
 class TransactionsListState with _$TransactionsListState {
   const factory TransactionsListState({
     @Default([]) Iterable<TransactionEntity> transactions,
+    @JsonKey(includeFromJson: false, includeToJson: false)
+    @Default([])
+    Iterable<TransactionEntity> filteredTransactions,
+    @JsonKey(includeFromJson: false, includeToJson: false)
+    FilterBundle? filterBundle,
     @Default(TransactionCategory.defaultExpenditureValues)
     Iterable<TransactionExpenditureCategory> availableExpenditureCategories,
     @Default(TransactionCategory.defaultIncomeValues)
@@ -42,7 +49,7 @@ extension TransactionsListStateHelper on TransactionsListState {
       ];
 
   Map<String, Iterable<TransactionEntity>> get transactionsByMonthsAndYears {
-    final formattedMonthAndYearList = transactions.map((e) {
+    final formattedMonthAndYearList = filteredTransactions.map((e) {
       final date = e.date;
       return (date, '${DateTimeUtils.getMonthName(date.month)} ${date.year}');
     }).toSet();
@@ -50,7 +57,7 @@ extension TransactionsListStateHelper on TransactionsListState {
     final Map<String, Iterable<TransactionEntity>> transitionsByMonthYear = {};
     for (final formattedDate in formattedMonthAndYearList) {
       transitionsByMonthYear.addAll({
-        formattedDate.$2: transactions.where((item) {
+        formattedDate.$2: filteredTransactions.where((item) {
           final currentDate = formattedDate.$1;
           final currentItemDate = item.date;
           return currentItemDate.month == currentDate.month &&
