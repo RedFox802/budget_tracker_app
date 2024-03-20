@@ -64,50 +64,87 @@ class _TransactionCategory extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Flexible(
-                child: Text(
-                  category.name,
-                  style: AppTextTheme.regular,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-              const SizedBox(height: 10),
-              LinearPercentIndicator(
-                percent: category.percentageSpent ?? 0.0,
-                padding: EdgeInsets.zero,
-                lineHeight: 8,
-                barRadius: const Radius.circular(16),
-                backgroundColor: AppColors.disabled,
-                progressColor: AppColors.primary100,
-              ),
-            ],
+          child: _IndicatorSection._(
+            title: category.name,
+            percent: category.percentageSpent ?? 0.0,
           ),
         ),
         const SizedBox(width: 16),
-        Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Flexible(
-              child: Text(
-                category.formattedAmount,
-                style: AppTextTheme.regular,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-            const SizedBox(height: 4),
-            Flexible(
-              child: Text(
-                category.formattedLimitWithLabel,
-                style: AppTextTheme.smallDisabled,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-          ],
+        _ValuesSection._(
+          amount: category.formattedAmount,
+          limit: category.formattedLimitWithLabel,
+        )
+      ],
+    );
+  }
+}
+
+class _IndicatorSection extends StatelessWidget {
+  const _IndicatorSection._({
+    required this.percent,
+    required this.title,
+  });
+
+  final double percent;
+
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Flexible(
+          child: Text(
+            title,
+            style: AppTextTheme.regular,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+        const SizedBox(height: 10),
+        LinearPercentIndicator(
+          percent: percent,
+          padding: EdgeInsets.zero,
+          lineHeight: 8,
+          barRadius: const Radius.circular(16),
+          backgroundColor: AppColors.disabled,
+          progressColor: AppColors.primary100,
+        ),
+      ],
+    );
+  }
+}
+
+class _ValuesSection extends StatelessWidget {
+  const _ValuesSection._({
+    required this.amount,
+    required this.limit,
+  });
+
+  final String amount;
+  final String limit;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Flexible(
+          child: Text(
+            amount,
+            style: AppTextTheme.regular,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+        const SizedBox(height: 4),
+        Flexible(
+          child: Text(
+            limit,
+            style: AppTextTheme.smallDisabled,
+            overflow: TextOverflow.ellipsis,
+          ),
         ),
       ],
     );

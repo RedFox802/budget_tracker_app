@@ -1,7 +1,8 @@
 import 'package:budget_tracker_app/common/domain/transition_list/model/transaction_category/transaction_category.dart';
 import 'package:budget_tracker_app/common/presentation/component/app_elevated_button.dart';
+import 'package:budget_tracker_app/common/presentation/component/app_list_lile.dart';
 import 'package:budget_tracker_app/common/presentation/component/card_wrapper/card_circular_border_all_wrapper.dart';
-import 'package:budget_tracker_app/feature/edit_transaction/presentation/component/custom_picker/custom_picker.dart';
+import 'package:budget_tracker_app/common/presentation/component/custom_picker.dart';
 import 'package:budget_tracker_app/theme/app_colors.dart';
 import 'package:budget_tracker_app/theme/app_text_theme.dart';
 import 'package:flutter/material.dart';
@@ -67,22 +68,13 @@ class _EditTransactionCategoryCardState
             );
           },
         ),
-        secondChild: ListTile(
-          visualDensity: const VisualDensity(
-            horizontal: -4,
-            vertical: -4,
-          ),
-          title: Text(
-            widget.title,
-            style: AppTextTheme.title,
-          ),
-          subtitle: Padding(
-            padding: const EdgeInsets.only(top: 6),
-            child: Text(
+        secondChild: AppListTile(
+          title: widget.title,
+          titleStyle: AppTextTheme.title,
+          subtitle:
               selectedCategory != null ? selectedCategory.name : 'Не выбрано',
-              style: AppTextTheme.regular,
-            ),
-          ),
+          subtitleStyle: AppTextTheme.regular,
+          subtitlePadding: const EdgeInsets.only(top: 6),
           onTap: () {
             setState(() {
               _showPicker = true;
@@ -175,7 +167,7 @@ class _DrumPickerState extends State<_DrumPicker> {
               return Center(
                 child: Text(
                   e.name,
-                  style: const TextStyle(color: AppColors.primary100),
+                  style: AppTextTheme.title,
                 ),
               );
             },

@@ -30,7 +30,7 @@ class SearchTextField extends StatefulWidget {
 }
 
 class _SearchTextFieldState extends State<SearchTextField> {
-  InputBorder get _inputBorder => InputBorder.none;
+  static const InputBorder _inputBorder = InputBorder.none;
 
   late final TextEditingController _textController;
 

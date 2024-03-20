@@ -7,6 +7,9 @@ import 'package:flutter/material.dart';
 class AppChartUtils {
   static const verticalLabelCount = 5;
 
+  static const spaseForOneSection = 80.0;
+  static const minChartHeight = 250.0;
+
   static Border get chartBorder {
     const defaultBorder = BorderSide(color: Colors.transparent);
     const accentBorder = BorderSide(color: AppColors.primary100);

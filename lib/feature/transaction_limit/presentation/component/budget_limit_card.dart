@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:budget_tracker_app/common/domain/transition_list/model/transaction_category/transaction_category.dart';
+import 'package:budget_tracker_app/common/presentation/component/app_list_lile.dart';
 import 'package:budget_tracker_app/common/presentation/component/card_wrapper/card_circular_border_all_wrapper.dart';
 import 'package:budget_tracker_app/feature/transaction_limit/presentation/component/limit_list_tile.dart';
 import 'package:budget_tracker_app/router/app_router.dart';
@@ -29,9 +30,15 @@ class BudgetLimitCard extends StatelessWidget {
               categories: categories,
               onTap: () => _onCategoryTap(context),
             )
-          : _NoLimitState._(
-              currentMonth: currentMonth,
+          : AppListTile(
               onTap: () => _onCategoryTap(context),
+              titleStyle: AppTextTheme.title,
+              titleMaxLines: 2,
+              title: 'Установите лимит трат на $currentMonth!',
+              subtitlePadding: EdgeInsets.only(top: 6),
+              subtitleStyle: AppTextTheme.regularDisabled,
+              subtitle:
+                  'Задайте лимиты по категориям или общий лимит по всем тратам.',
             ),
     );
   }
@@ -40,42 +47,6 @@ class BudgetLimitCard extends StatelessWidget {
     BuildContext context,
   ) {
     context.router.push(const EditLimitsRoute());
-  }
-}
-
-class _NoLimitState extends StatelessWidget {
-  const _NoLimitState._({
-    required this.currentMonth,
-    required this.onTap,
-  });
-
-  final String currentMonth;
-
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      onTap: onTap,
-      minVerticalPadding: 0,
-      contentPadding: EdgeInsets.zero,
-      visualDensity: const VisualDensity(vertical: -4, horizontal: -4),
-      title: Text(
-        'Установите лимит трат на $currentMonth!',
-        style: AppTextTheme.title,
-        maxLines: 2,
-        overflow: TextOverflow.ellipsis,
-      ),
-      subtitle: const Padding(
-        padding: EdgeInsets.only(top: 6),
-        child: Text(
-          'Задайте лимиты по категориям или общий лимит по всем тратам.',
-          style: AppTextTheme.regularDisabled,
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
-        ),
-      ),
-    );
   }
 }
 

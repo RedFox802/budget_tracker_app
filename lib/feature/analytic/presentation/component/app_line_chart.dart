@@ -31,6 +31,7 @@ class AnalyticLineChart extends StatelessWidget {
     );
 
     final verticalStep = AppChartUtils.getVerticalStep(maxAmount);
+
     final horizontalItemsLength = max(
       incomeData.keys.length.toDouble(),
       expenditureData.keys.length.toDouble(),
@@ -40,8 +41,8 @@ class AnalyticLineChart extends StatelessWidget {
       title: 'Статиcтика по расходам и доходам',
       chartWidget: ConstrainedBox(
         constraints: BoxConstraints(
-          maxHeight: 250,
-          maxWidth: horizontalItemsLength * 80,
+          maxHeight: AppChartUtils.minChartHeight,
+          maxWidth: horizontalItemsLength * AppChartUtils.spaseForOneSection,
         ),
         child: Padding(
           padding: const EdgeInsets.fromLTRB(0, 10, 10, 0),
@@ -108,10 +109,12 @@ class AnalyticLineChart extends StatelessWidget {
     for (final item in data.keys) {
       final dataItem = data[item];
       if (dataItem != null) {
-        spots.add(FlSpot(
-          item.toDouble(),
-          dataItem,
-        ));
+        spots.add(
+          FlSpot(
+            item.toDouble(),
+            dataItem,
+          ),
+        );
       }
     }
 

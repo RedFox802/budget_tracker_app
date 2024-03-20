@@ -1,4 +1,5 @@
 import 'package:budget_tracker_app/common/presentation/component/app_elevated_button.dart';
+import 'package:budget_tracker_app/common/presentation/component/app_list_lile.dart';
 import 'package:budget_tracker_app/common/presentation/component/card_wrapper/card_circular_border_all_wrapper.dart';
 import 'package:budget_tracker_app/theme/app_colors.dart';
 import 'package:budget_tracker_app/theme/app_text_theme.dart';
@@ -59,24 +60,14 @@ class _EditTransactionDateCardState extends State<EditTransactionDateCard> {
             );
           },
         ),
-        secondChild: ListTile(
-          visualDensity: const VisualDensity(
-            horizontal: -4,
-            vertical: -4,
-          ),
-          title: Text(
-            widget.title,
-            style: AppTextTheme.title,
-          ),
-          subtitle: Padding(
-            padding: const EdgeInsets.only(top: 6),
-            child: Text(
-              selectedValue != null
-                  ? selectedValue.formattedDate
-                  : 'Не выбрано',
-              style: AppTextTheme.regular,
-            ),
-          ),
+        secondChild: AppListTile(
+          title: widget.title,
+          subtitle: selectedValue != null
+              ? selectedValue.formattedDate
+              : 'Не выбрано',
+          titleStyle: AppTextTheme.title,
+          subtitleStyle: AppTextTheme.regular,
+          subtitlePadding: const EdgeInsets.only(top: 6),
           onTap: () {
             setState(() {
               _showPicker = true;

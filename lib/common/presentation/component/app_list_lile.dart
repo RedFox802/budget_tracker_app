@@ -36,6 +36,7 @@ class AppListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      minVerticalPadding: 0,
       contentPadding: EdgeInsets.zero,
       visualDensity: const VisualDensity(
         vertical: -4,
@@ -45,7 +46,6 @@ class AppListTile extends StatelessWidget {
       title: Text(
         title,
         style: titleStyle ?? AppTextTheme.title,
-        textAlign: TextAlign.center,
         maxLines: titleMaxLines,
       ),
       subtitle: Padding(
@@ -53,7 +53,6 @@ class AppListTile extends StatelessWidget {
         child: Text(
           subtitle,
           style: subtitleStyle ?? AppTextTheme.regular,
-          textAlign: TextAlign.center,
           maxLines: subtitleMaxLines,
         ),
       ),

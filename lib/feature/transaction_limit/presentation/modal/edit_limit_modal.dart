@@ -4,6 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:budget_tracker_app/common/domain/transition_list/cubit/transactions_list_cubit.dart';
 import 'package:budget_tracker_app/common/domain/transition_list/model/transaction_category/transaction_category.dart';
 import 'package:budget_tracker_app/common/presentation/component/app_elevated_button.dart';
+import 'package:budget_tracker_app/common/presentation/component/app_text_field.dart';
 import 'package:budget_tracker_app/theme/app_colors.dart';
 import 'package:budget_tracker_app/theme/app_text_theme.dart';
 import 'package:flutter/material.dart';
@@ -36,22 +37,11 @@ class _EditLimitModalState extends State<EditLimitModal> {
     }
   }
 
-  InputBorder get _inputBorder => const OutlineInputBorder(
-        borderSide: BorderSide(color: Colors.transparent),
-        borderRadius: BorderRadius.all(
-          Radius.circular(16),
-        ),
-      );
-
   @override
   Widget build(BuildContext context) {
+    final bottomIndent = max(MediaQuery.viewInsetsOf(context).bottom, 16.0);
     return Padding(
-      padding: EdgeInsets.fromLTRB(
-        16,
-        16,
-        16,
-        max(MediaQuery.viewInsetsOf(context).bottom, 16),
-      ),
+      padding: EdgeInsets.fromLTRB(16, 16, 16, bottomIndent),
       child: Material(
         color: AppColors.backgroundSecondary,
         type: MaterialType.card,
@@ -87,26 +77,14 @@ class _EditLimitModalState extends State<EditLimitModal> {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20),
-                  child: TextFormField(
+                  child: AppTextField(
                     initialValue: selectedLimit,
                     onChanged: _onLimitChanged,
                     maxLength: 10,
                     keyboardType: TextInputType.number,
-                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                    cursorColor: AppColors.primary100,
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: AppColors.primary10.withOpacity(0.2),
-                      counter: const SizedBox.shrink(),
-                      hintText: 'Введите значение лимита',
-                      contentPadding: const EdgeInsets.fromLTRB(16, 26, 16, 0),
-                      enabledBorder: _inputBorder,
-                      border: _inputBorder,
-                      focusedErrorBorder: _inputBorder,
-                      focusedBorder: _inputBorder,
-                      disabledBorder: _inputBorder,
-                      errorBorder: _inputBorder,
-                    ),
+                    formatter: FilteringTextInputFormatter.digitsOnly,
+                    filledColor: AppColors.primary10.withOpacity(0.2),
+                    hint: 'Введите значение лимита',
                   ),
                 ),
                 SizedBox(

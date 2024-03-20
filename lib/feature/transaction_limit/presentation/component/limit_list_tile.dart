@@ -1,4 +1,5 @@
 import 'package:budget_tracker_app/common/domain/transition_list/model/transaction_category/transaction_category.dart';
+import 'package:budget_tracker_app/common/presentation/component/app_list_lile.dart';
 import 'package:budget_tracker_app/theme/app_text_theme.dart';
 import 'package:flutter/material.dart';
 
@@ -18,25 +19,16 @@ class LimitListTile extends StatelessWidget {
     final hasLimit = category.hasLimit;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 2),
-      child: ListTile(
+      child: AppListTile(
         onTap: onTap,
-        minVerticalPadding: 0,
-        contentPadding: EdgeInsets.zero,
-        visualDensity: const VisualDensity(vertical: -4, horizontal: -4),
-        title: Text(
-          'Ваш бюджет на «${category.name}»',
-          style: AppTextTheme.regular,
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
-        ),
-        subtitle: Text(
-          hasLimit
-              ? 'Уже потрачено ${category.formattedAmount}'
-              : 'Не установлен',
-          style: AppTextTheme.regularDisabled,
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
-        ),
+        titleStyle: AppTextTheme.regular,
+        titleMaxLines: 2,
+        title: 'Ваш бюджет на «${category.name}»',
+        subtitleStyle: AppTextTheme.regularDisabled,
+        subtitleMaxLines: 2,
+        subtitle: hasLimit
+            ? 'Уже потрачено ${category.formattedAmount}'
+            : 'Не установлен',
         trailing: hasLimit
             ? Text(
                 category.formattedLimit,

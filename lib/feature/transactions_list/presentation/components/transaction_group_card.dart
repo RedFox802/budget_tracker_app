@@ -52,7 +52,7 @@ class _TransactionGroupCardState extends State<TransactionGroupCard> {
             header,
             const SizedBox(height: 10),
             ...transactions.map(
-              (e) => TransactionCard(transaction: e),
+              (item) => TransactionCard(transaction: item),
             ),
           ],
         ),

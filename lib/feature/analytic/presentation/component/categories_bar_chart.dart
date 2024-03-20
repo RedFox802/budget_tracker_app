@@ -13,14 +13,14 @@ class CategoriesBarChart extends StatelessWidget {
 
   final Map<TransactionExpenditureCategory, double> data;
 
-  double get maxValue => data.values.fold<double>(0, (prValue, element) {
+  double get _maxValue => data.values.fold<double>(0, (prValue, element) {
         if (element > prValue) {
           return element;
         }
         return prValue;
       });
 
-  List<BarChartGroupData> get chartBars {
+  List<BarChartGroupData> get _chartBars {
     final keys = data.keys.toList();
     const radius = Radius.circular(4);
     return keys.map(
@@ -44,7 +44,7 @@ class CategoriesBarChart extends StatelessWidget {
     ).toList();
   }
 
-  AxisTitles get horizontalTiles {
+  AxisTitles get _horizontalTiles {
     return AxisTitles(
       drawBelowEverything: false,
       sideTitles: SideTitles(
@@ -70,7 +70,7 @@ class CategoriesBarChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final defaultEmptyTiles = AppChartUtils.defaultEmptyTiles;
-    final verticalStep = AppChartUtils.getVerticalStep(maxValue);
+    final verticalStep = AppChartUtils.getVerticalStep(_maxValue);
 
     return AppChartWrapper(
       title: 'Статистика расходов по категориям',
@@ -78,18 +78,18 @@ class CategoriesBarChart extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(0, 10, 10, 0),
         child: ConstrainedBox(
           constraints: BoxConstraints(
-            maxHeight: 270,
-            maxWidth: data.length * 80,
+            maxHeight: AppChartUtils.minChartHeight + 20,
+            maxWidth: data.length * AppChartUtils.spaseForOneSection,
           ),
           child: BarChart(
             BarChartData(
-              maxY: maxValue,
-              barGroups: chartBars,
+              maxY: _maxValue,
+              barGroups: _chartBars,
               titlesData: FlTitlesData(
                 leftTitles: AppChartUtils.getVerticalTiles(
                   verticalStep,
                 ),
-                bottomTitles: horizontalTiles,
+                bottomTitles: _horizontalTiles,
                 topTitles: defaultEmptyTiles,
                 rightTitles: defaultEmptyTiles,
               ),

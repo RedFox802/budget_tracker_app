@@ -1,5 +1,5 @@
+import 'package:budget_tracker_app/common/presentation/component/app_text_field.dart';
 import 'package:budget_tracker_app/common/presentation/component/card_wrapper/card_circular_border_all_wrapper.dart';
-import 'package:budget_tracker_app/theme/app_colors.dart';
 import 'package:budget_tracker_app/theme/app_text_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -27,13 +27,6 @@ class EditEnteringValueCard extends StatelessWidget {
 
   final TextInputFormatter? formatter;
 
-  InputBorder get _inputBorder => const OutlineInputBorder(
-        borderSide: BorderSide(color: Colors.transparent),
-        borderRadius: BorderRadius.all(
-          Radius.circular(16),
-        ),
-      );
-
   @override
   Widget build(BuildContext context) {
     return CardCircularBorderAllWrapper(
@@ -50,29 +43,14 @@ class EditEnteringValueCard extends StatelessWidget {
         ),
         subtitle: Padding(
           padding: const EdgeInsets.symmetric(vertical: 10),
-          child: SizedBox(
-            height: 54,
-            child: TextFormField(
-              initialValue: initialValue,
-              onChanged: onChanged,
-              maxLength: 20,
-              keyboardType: keyboardType,
-              inputFormatters: [if (formatter != null) formatter!],
-              cursorColor: AppColors.primary100,
-              decoration: InputDecoration(
-                counter: const SizedBox.shrink(),
-                filled: true,
-                hintText: hint,
-                contentPadding: const EdgeInsets.fromLTRB(16, 26, 16, 0),
-                fillColor: AppColors.primary10.withOpacity(0.2),
-                enabledBorder: _inputBorder,
-                border: _inputBorder,
-                focusedErrorBorder: _inputBorder,
-                focusedBorder: _inputBorder,
-                disabledBorder: _inputBorder,
-                errorBorder: _inputBorder,
-              ),
-            ),
+          child: AppTextField(
+            hint: hint,
+            initialValue: initialValue,
+            onChanged: onChanged,
+            maxLength: 20,
+            keyboardType: keyboardType,
+            formatter: formatter,
+            size: 54,
           ),
         ),
       ),

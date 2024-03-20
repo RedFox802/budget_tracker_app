@@ -90,9 +90,6 @@ class _RadioRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => onChanged(value),
-      overlayColor: MaterialStateColor.resolveWith(
-        (states) => Colors.transparent,
-      ),
       child: Row(
         children: [
           Radio<TransactionType>(

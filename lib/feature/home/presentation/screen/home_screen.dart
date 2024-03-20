@@ -17,6 +17,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const indent = SizedBox(height: 8);
     final listenableState = context.watch<TransactionsListCubit>().state;
     final needShowExceedingSpendingLimitWarning =
         listenableState.hasExceedingLimitThreatCategories ||
@@ -36,22 +37,22 @@ class HomeScreen extends StatelessWidget {
                   ...listenableState.limitExceededCategories,
                 ],
               ),
-            const SizedBox(height: 8),
+            indent,
             BudgetCard(
               totalIncome: listenableState.totalIncome,
               totalSpending: listenableState.totalExpenditure,
             ),
-            const SizedBox(height: 8),
+            indent,
             BudgetLimitCard(
               currentMonth: DateTimeUtils.getMonthName(DateTime.now().month),
               categories: listenableState.limitedExpenditureCategories,
             ),
-            const SizedBox(height: 8),
+            indent,
             TransactionGroupCard(
               groupName: 'Последние траты',
               transactions: listenableState.expenditureTransitions.take(10),
             ),
-            const SizedBox(height: 8),
+            indent,
             TransactionGroupCard(
               groupName: 'Последние доходы',
               transactions: listenableState.incomeTransitions.take(10),

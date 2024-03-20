@@ -27,50 +27,69 @@ class BudgetCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
           ),
           const SizedBox(height: 4),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  title: const Text(
-                    'Сумма доходов',
-                    style: AppTextTheme.regularDisabled,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  subtitle: Padding(
-                    padding: const EdgeInsets.only(top: 4),
-                    child: Text(
-                      '$totalIncome ₽',
-                      style: AppTextTheme.title,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  title: const Text(
-                    'Сумма расходов',
-                    style: AppTextTheme.regularDisabled,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  subtitle: Padding(
-                    padding: const EdgeInsets.only(top: 4),
-                    child: Text(
-                      '$totalSpending ₽',
-                      style: AppTextTheme.title,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ),
-              ),
-            ],
+          _ValuesSection._(
+            totalIncome: totalIncome,
+            totalSpending: totalSpending,
           ),
         ],
       ),
+    );
+  }
+}
+
+class _ValuesSection extends StatelessWidget {
+  const _ValuesSection._({
+    required this.totalIncome,
+    required this.totalSpending,
+  });
+
+  final num totalIncome;
+
+  final num totalSpending;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Expanded(
+          child: ListTile(
+            contentPadding: EdgeInsets.zero,
+            title: const Text(
+              'Сумма доходов',
+              style: AppTextTheme.regularDisabled,
+              overflow: TextOverflow.ellipsis,
+            ),
+            subtitle: Padding(
+              padding: const EdgeInsets.only(top: 4),
+              child: Text(
+                '$totalIncome ₽',
+                style: AppTextTheme.title,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ),
+        ),
+        Expanded(
+          child: ListTile(
+            contentPadding: EdgeInsets.zero,
+            title: const Text(
+              'Сумма расходов',
+              style: AppTextTheme.regularDisabled,
+              overflow: TextOverflow.ellipsis,
+            ),
+            subtitle: Padding(
+              padding: const EdgeInsets.only(top: 4),
+              child: Text(
+                '$totalSpending ₽',
+                style: AppTextTheme.title,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
