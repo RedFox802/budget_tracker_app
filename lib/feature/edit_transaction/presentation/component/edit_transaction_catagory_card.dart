@@ -1,5 +1,5 @@
 import 'package:budget_tracker_app/common/domain/transition_list/model/transaction_category/transaction_category.dart';
-import 'package:budget_tracker_app/common/presentation/component/button/app_elevated_button.dart';
+import 'package:budget_tracker_app/common/presentation/component/app_elevated_button.dart';
 import 'package:budget_tracker_app/common/presentation/component/card_wrapper/card_circular_border_all_wrapper.dart';
 import 'package:budget_tracker_app/feature/edit_transaction/presentation/component/custom_picker/custom_picker.dart';
 import 'package:budget_tracker_app/theme/app_colors.dart';

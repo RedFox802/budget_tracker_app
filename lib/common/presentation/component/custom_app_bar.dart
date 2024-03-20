@@ -1,5 +1,4 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:budget_tracker_app/common/presentation/component/card_wrapper/card_circular_bottom_border_wrapper.dart';
 import 'package:budget_tracker_app/theme/app_colors.dart';
 import 'package:budget_tracker_app/theme/app_text_theme.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +16,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    const borderRadius = Radius.circular(16);
     final router = context.router;
     final catPop = router.canPop();
     return AppBar(
@@ -33,16 +33,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
-          bottomRight: Radius.circular(16),
-          bottomLeft: Radius.circular(16),
+          bottomRight: borderRadius,
+          bottomLeft: borderRadius,
         ),
       ),
-      title: CardCircularBottomBorderWrapper(
-        padding: const EdgeInsets.all(8),
-        child: Text(
-          title ?? 'Budget app',
-          style: AppTextTheme.title,
-        ),
+      title: Text(
+        title ?? 'Budget app',
+        style: AppTextTheme.title,
       ),
     );
   }

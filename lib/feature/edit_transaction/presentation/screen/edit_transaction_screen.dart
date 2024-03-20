@@ -1,9 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:budget_tracker_app/common/domain/transition_list/cubit/transactions_list_cubit.dart';
 import 'package:budget_tracker_app/common/domain/transition_list/model/transaction/transaction_entity.dart';
-import 'package:budget_tracker_app/common/presentation/component/app_bar/custom_app_bar.dart';
+import 'package:budget_tracker_app/common/presentation/component/custom_app_bar.dart';
 import 'package:budget_tracker_app/common/presentation/component/app_error_flush_bar.dart';
-import 'package:budget_tracker_app/common/presentation/component/button/app_elevated_button.dart';
+import 'package:budget_tracker_app/common/presentation/component/app_elevated_button.dart';
 import 'package:budget_tracker_app/common/presentation/component/card_wrapper/card_circular_border_all_wrapper.dart';
 import 'package:budget_tracker_app/common/presentation/component/card_wrapper/card_circular_top_border_wrapper.dart';
 import 'package:budget_tracker_app/di/service_locator.dart';
@@ -229,7 +229,7 @@ class _ButtonSection extends StatelessWidget {
                   child: IconButton(
                     icon: const Icon(
                       Icons.delete_outline,
-                      color: AppColors.backgroundAndText,
+                      color: AppColors.backgroundSecondary,
                     ),
                     onPressed: onDelete,
                   ),

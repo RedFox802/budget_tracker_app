@@ -33,7 +33,7 @@ class TransactionsListState with _$TransactionsListState {
       _$TransactionsListStateFromJson(json);
 }
 
-extension TransactionsListStateHelper on TransactionsListState {
+extension LimitedExpenditureCategoriesHelper on TransactionsListState {
   bool get hasExceedingLimitThreatCategories =>
       limitedExpenditureCategories.any(
         (element) => element.hasExceedingLimitThreat,
@@ -58,7 +58,9 @@ extension TransactionsListStateHelper on TransactionsListState {
           limitedExpenditureCategories.toSet(),
         );
   }
+}
 
+extension TransactionsListHelper on TransactionsListState {
   Iterable<TransactionEntity> get incomeTransitions => transactions.where(
         (item) => item.type == TransactionType.income,
       );

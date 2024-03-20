@@ -11,7 +11,6 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:budget_tracker_app/common/domain/transition_list/cubit/transactions_list_cubit.dart'
     as _i3;
-import 'package:budget_tracker_app/di/g.dart' as _i4;
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 
@@ -28,7 +27,6 @@ extension GetItInjectableX on _i1.GetIt {
     );
     gh.lazySingleton<_i3.TransactionsListCubit>(
         () => _i3.TransactionsListCubit());
-    gh.factory<_i4.k>(() => _i4.k());
     return this;
   }
 }

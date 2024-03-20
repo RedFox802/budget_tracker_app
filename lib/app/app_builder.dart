@@ -9,13 +9,13 @@ import 'package:provider/provider.dart';
 class AppBuilder {
   AppBuilder(this.appRouter);
 
+  final RootStackRouter appRouter;
+
   List<SingleChildWidget> get providers => [
         BlocProvider.value(
           value: getIt<TransactionsListCubit>(),
         ),
       ];
-
-  final RootStackRouter appRouter;
 
   Widget buildApp() {
     return MultiProvider(
@@ -26,7 +26,6 @@ class AppBuilder {
         routeInformationProvider: appRouter.routeInfoProvider(),
         routeInformationParser: appRouter.defaultRouteParser(),
         themeMode: ThemeMode.light,
-        locale: const Locale('ru'),
         routerDelegate: AutoRouterDelegate(
           appRouter,
           navigatorObservers: () => [AutoRouteObserver()],

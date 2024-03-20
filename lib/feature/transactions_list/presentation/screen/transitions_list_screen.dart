@@ -1,7 +1,7 @@
-import 'package:budget_tracker_app/common/domain/transition_list/cubit/state/transactions_list_state.dart';
+import 'package:budget_tracker_app/common/domain/transition_list/state/transactions_list_state.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:budget_tracker_app/common/domain/transition_list/cubit/transactions_list_cubit.dart';
-import 'package:budget_tracker_app/common/presentation/component/app_bar/custom_app_bar.dart';
+import 'package:budget_tracker_app/common/presentation/component/custom_app_bar.dart';
 import 'package:budget_tracker_app/common/presentation/component/card_wrapper/card_circular_border_all_wrapper.dart';
 import 'package:budget_tracker_app/common/presentation/component/empty_data_card.dart';
 import 'package:budget_tracker_app/feature/transactions_list/presentation/components/transaction_group_card.dart';

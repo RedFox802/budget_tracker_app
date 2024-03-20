@@ -1,4 +1,4 @@
-import 'package:budget_tracker_app/common/domain/transition_list/model/transaction_category/category_limit.dart';
+import 'package:budget_tracker_app/common/domain/transition_list/model/category_limit/category_limit.dart';
 import 'package:budget_tracker_app/utils/string_utils.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -113,23 +113,8 @@ sealed class TransactionCategory with _$TransactionCategory {
   ];
 }
 
-extension TransactionExpenditureCategoryHelper
+extension ExpenditureCategoriesFormattingHelper
     on TransactionExpenditureCategory {
-  bool get hasLimit => limitEntity != null;
-
-  bool get isLimitExceeded {
-    if (!hasLimit) return false;
-
-    return amount > limitEntity!.limit;
-  }
-
-  bool get hasExceedingLimitThreat {
-    if (!hasLimit) return false;
-
-    final limitValue = limitEntity!.limit;
-    return (limitValue - amount) < limitValue * 0.15;
-  }
-
   String get formattedAmount {
     return StringUtils.getMoneyFormattedString('$amount');
   }
@@ -146,6 +131,24 @@ extension TransactionExpenditureCategoryHelper
     return limitValue == null
         ? ''
         : StringUtils.getMoneyFormattedString('Лимит $limitValue');
+  }
+}
+
+extension ExpenditureCategoriesLimitsCalculationHelper
+    on TransactionExpenditureCategory {
+  bool get hasLimit => limitEntity != null;
+
+  bool get isLimitExceeded {
+    if (!hasLimit) return false;
+
+    return amount > limitEntity!.limit;
+  }
+
+  bool get hasExceedingLimitThreat {
+    if (!hasLimit) return false;
+
+    final limitValue = limitEntity!.limit;
+    return (limitValue - amount) < limitValue * 0.15;
   }
 
   double? get percentageSpent {

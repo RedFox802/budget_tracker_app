@@ -27,7 +27,7 @@ enum AppRouterTabs {
 final appRouter = AppRouter();
 
 @AutoRouterConfig(
-  replaceInRouteName: 'Modal|Screen|Dialog,Route',
+  replaceInRouteName: 'Modal|Screen,Route',
 )
 class AppRouter extends _$AppRouter {
   AppRouter() : super();

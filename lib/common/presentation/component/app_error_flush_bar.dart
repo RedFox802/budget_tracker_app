@@ -7,18 +7,19 @@ void showFlushBarError(
   BuildContext context, {
   required String text,
 }) {
+  const padding = EdgeInsets.all(16);
   Flushbar(
     blockBackgroundInteraction: true,
     messageText: Text(
       text,
       style: AppTextTheme.regular.copyWith(
-        color: Colors.white,
-        fontWeight: FontWeight.w500
+        color: AppColors.backgroundSecondary,
+        fontWeight: FontWeight.w500,
       ),
     ),
     duration: const Duration(seconds: 2),
-    margin: const EdgeInsets.all(16),
-    padding: const EdgeInsets.all(16),
+    margin: padding,
+    padding: padding,
     borderRadius: BorderRadius.circular(16),
     backgroundColor: Colors.red,
     maxWidth: 600,

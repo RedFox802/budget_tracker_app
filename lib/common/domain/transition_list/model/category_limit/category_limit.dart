@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'category_limit.freezed.dart';
+
 part 'category_limit.g.dart';
 
 @freezed

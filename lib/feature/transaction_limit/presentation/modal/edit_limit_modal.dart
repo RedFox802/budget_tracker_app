@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:auto_route/auto_route.dart';
 import 'package:budget_tracker_app/common/domain/transition_list/cubit/transactions_list_cubit.dart';
 import 'package:budget_tracker_app/common/domain/transition_list/model/transaction_category/transaction_category.dart';
-import 'package:budget_tracker_app/common/presentation/component/button/app_elevated_button.dart';
+import 'package:budget_tracker_app/common/presentation/component/app_elevated_button.dart';
 import 'package:budget_tracker_app/theme/app_colors.dart';
 import 'package:budget_tracker_app/theme/app_text_theme.dart';
 import 'package:flutter/material.dart';

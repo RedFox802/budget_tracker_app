@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:budget_tracker_app/common/domain/transition_list/cubit/state/transactions_list_state.dart';
+import 'package:budget_tracker_app/common/domain/transition_list/state/transactions_list_state.dart';
 import 'package:budget_tracker_app/common/domain/transition_list/cubit/transactions_list_cubit.dart';
-import 'package:budget_tracker_app/common/presentation/component/app_bar/custom_app_bar.dart';
+import 'package:budget_tracker_app/common/presentation/component/custom_app_bar.dart';
 import 'package:budget_tracker_app/feature/home/presentation/component/budget_card.dart';
 import 'package:budget_tracker_app/feature/transaction_limit/presentation/component/budget_limit_card.dart';
 import 'package:budget_tracker_app/feature/transaction_limit/presentation/component/exceeding_spending_limit_warning_card.dart';

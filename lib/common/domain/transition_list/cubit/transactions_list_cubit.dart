@@ -1,7 +1,7 @@
-import 'package:budget_tracker_app/common/domain/transition_list/cubit/state/transactions_list_state.dart';
+import 'package:budget_tracker_app/common/domain/transition_list/state/transactions_list_state.dart';
 import 'package:budget_tracker_app/common/domain/transition_list/model/filter/filter_bundle.dart';
 import 'package:budget_tracker_app/common/domain/transition_list/model/transaction/transaction_entity.dart';
-import 'package:budget_tracker_app/common/domain/transition_list/model/transaction_category/category_limit.dart';
+import 'package:budget_tracker_app/common/domain/transition_list/model/category_limit/category_limit.dart';
 import 'package:budget_tracker_app/common/domain/transition_list/model/transaction_category/transaction_category.dart';
 import 'package:injectable/injectable.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';

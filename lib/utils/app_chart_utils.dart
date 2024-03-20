@@ -1,5 +1,6 @@
 import 'package:budget_tracker_app/theme/app_colors.dart';
 import 'package:budget_tracker_app/theme/app_text_theme.dart';
+import 'package:budget_tracker_app/utils/string_utils.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
@@ -34,15 +35,10 @@ class AppChartUtils {
         getTitlesWidget: (value, _) {
           final labelNumber = value / labelsCount;
           int currentValue = (labelNumber * labelsCount).round();
-          String displayValue = '$currentValue';
-          if (currentValue >= 1000) {
-            currentValue = currentValue ~/ 1000;
-            displayValue = '$currentValue т';
-          }
           return Padding(
             padding: const EdgeInsets.only(right: 10),
             child: Text(
-              displayValue,
+              StringUtils.getShortMoneyString(currentValue),
               style: AppTextTheme.regular,
               textAlign: TextAlign.right,
             ),

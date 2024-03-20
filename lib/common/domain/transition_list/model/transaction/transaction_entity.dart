@@ -1,4 +1,5 @@
 import 'package:budget_tracker_app/common/domain/transition_list/model/transaction_category/transaction_category.dart';
+import 'package:budget_tracker_app/utils/string_utils.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'transaction_entity.freezed.dart';
@@ -33,6 +34,6 @@ class TransactionEntity with _$TransactionEntity {
 extension TransactionEntityHelper on TransactionEntity {
   String get formattedAmount {
     String transactionPrefix = type == TransactionType.income ? '+' : '-';
-    return '$transactionPrefix $amount ₽';
+    return StringUtils.getMoneyFormattedString('$transactionPrefix $amount');
   }
 }

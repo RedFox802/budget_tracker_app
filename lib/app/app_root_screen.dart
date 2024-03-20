@@ -38,22 +38,16 @@ class RootScreen extends StatelessWidget {
                 top: Radius.circular(16),
               ),
               child: BottomNavigationBar(
-                backgroundColor: Colors.white,
+                backgroundColor: AppColors.backgroundSecondary,
                 currentIndex: tabsRouter.activeIndex,
                 selectedItemColor: AppColors.primary100,
                 selectedLabelStyle: AppTextTheme.small,
                 unselectedLabelStyle: AppTextTheme.smallDisabled,
                 type: BottomNavigationBarType.fixed,
-                onTap: (index) {
-                  if (tabsRouter.activeIndex == index) {
-                    final currentRouter = tabsRouter.stackRouterOfIndex(index);
-                    if (currentRouter?.canPop() ?? false) {
-                      currentRouter?.popUntilRoot();
-                    }
-                  } else {
-                    tabsRouter.setActiveIndex(index);
-                  }
-                },
+                onTap: (index) => onBarItemTap(
+                  tabsRouter: tabsRouter,
+                  index: index,
+                ),
                 items: const [
                   BottomNavigationBarItem(
                     activeIcon: Icon(
@@ -79,7 +73,7 @@ class RootScreen extends StatelessWidget {
                   ),
                   BottomNavigationBarItem(
                     activeIcon: Icon(
-                      Icons. multiline_chart,
+                      Icons.multiline_chart,
                       color: selectedColor,
                     ),
                     icon: Icon(
@@ -95,5 +89,19 @@ class RootScreen extends StatelessWidget {
         );
       },
     );
+  }
+
+  void onBarItemTap({
+    required TabsRouter tabsRouter,
+    required int index,
+  }) {
+    if (tabsRouter.activeIndex == index) {
+      final currentRouter = tabsRouter.stackRouterOfIndex(index);
+      if (currentRouter?.canPop() ?? false) {
+        currentRouter?.popUntilRoot();
+      }
+    } else {
+      tabsRouter.setActiveIndex(index);
+    }
   }
 }

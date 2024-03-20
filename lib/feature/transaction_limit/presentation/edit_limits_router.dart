@@ -24,7 +24,7 @@ class EditLimitRouter {
       path: 'editModal',
       page: EditLimitRoute.page,
       type: const RouteType.custom(
-        customRouteBuilder: CustomRoutes.modalRawBottomSheetBuilder,
+        customRouteBuilder: CustomRoutes.modalBottomSheetBuilder,
       ),
     ),
   ];
