@@ -5,7 +5,12 @@ import 'package:budget_tracker_app/theme/app_text_theme.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const CustomAppBar({super.key});
+  const CustomAppBar({
+    this.title,
+    super.key,
+  });
+
+  final String? title;
 
   @override
   Size get preferredSize => const Size.fromHeight(50);
@@ -32,10 +37,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           bottomLeft: Radius.circular(16),
         ),
       ),
-      title: const CardCircularBottomBorderWrapper(
-        padding: EdgeInsets.all(8),
+      title: CardCircularBottomBorderWrapper(
+        padding: const EdgeInsets.all(8),
         child: Text(
-          'Budget app',
+          title ?? 'Budget app',
           style: AppTextTheme.title,
         ),
       ),

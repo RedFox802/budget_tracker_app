@@ -10,8 +10,11 @@ _$TransactionExpenditureCategory _$$TransactionExpenditureCategoryFromJson(
         Map<String, dynamic> json) =>
     _$TransactionExpenditureCategory(
       name: json['name'] as String,
+      id: json['id'] as String,
       amount: json['amount'] as num? ?? 0,
-      limit: json['limit'] as num?,
+      limitEntity: json['limitEntity'] == null
+          ? null
+          : CategoryLimit.fromJson(json['limitEntity'] as Map<String, dynamic>),
       $type: json['runtimeType'] as String?,
     );
 
@@ -19,8 +22,9 @@ Map<String, dynamic> _$$TransactionExpenditureCategoryToJson(
         _$TransactionExpenditureCategory instance) =>
     <String, dynamic>{
       'name': instance.name,
+      'id': instance.id,
       'amount': instance.amount,
-      'limit': instance.limit,
+      'limitEntity': instance.limitEntity,
       'runtimeType': instance.$type,
     };
 
@@ -28,6 +32,7 @@ _$TransactionIncomeCategory _$$TransactionIncomeCategoryFromJson(
         Map<String, dynamic> json) =>
     _$TransactionIncomeCategory(
       name: json['name'] as String,
+      id: json['id'] as String,
       amount: json['amount'] as num? ?? 0,
       $type: json['runtimeType'] as String?,
     );
@@ -36,6 +41,7 @@ Map<String, dynamic> _$$TransactionIncomeCategoryToJson(
         _$TransactionIncomeCategory instance) =>
     <String, dynamic>{
       'name': instance.name,
+      'id': instance.id,
       'amount': instance.amount,
       'runtimeType': instance.$type,
     };

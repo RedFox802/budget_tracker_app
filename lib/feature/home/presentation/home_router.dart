@@ -1,9 +1,10 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:budget_tracker_app/feature/transaction_limit/presentation/edit_limits_router.dart';
 import 'package:budget_tracker_app/router/app_router.dart';
 
 class HomeRouter {
   static AutoRoute router = AutoRoute(
-    path: 'home',
+    path: 'home/',
     page: HomeNestedRouterRoute.page,
     children: [
       ..._routes,
@@ -15,5 +16,6 @@ class HomeRouter {
       initial: true,
       page: HomeRoute.page,
     ),
+    EditLimitRouter.router,
   ];
 }

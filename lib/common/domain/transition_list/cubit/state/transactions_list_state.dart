@@ -25,6 +25,8 @@ class TransactionsListState with _$TransactionsListState {
     Iterable<TransactionExpenditureCategory> availableExpenditureCategories,
     @Default(TransactionCategory.defaultIncomeValues)
     Iterable<TransactionIncomeCategory> availableIncomeCategories,
+    @Default([])
+    Iterable<TransactionExpenditureCategory> limitedExpenditureCategories,
   }) = _TransactionsListState;
 
   factory TransactionsListState.fromJson(Map<String, dynamic> json) =>
@@ -32,6 +34,31 @@ class TransactionsListState with _$TransactionsListState {
 }
 
 extension TransactionsListStateHelper on TransactionsListState {
+  bool get hasExceedingLimitThreatCategories =>
+      limitedExpenditureCategories.any(
+        (element) => element.hasExceedingLimitThreat,
+      );
+
+  bool get hasLimitExceededCategories => limitedExpenditureCategories.any(
+        (element) => element.isLimitExceeded,
+      );
+
+  Iterable<TransactionExpenditureCategory> get exceedingLimitThreatCategories =>
+      limitedExpenditureCategories.where(
+        (element) => element.hasExceedingLimitThreat,
+      );
+
+  Iterable<TransactionExpenditureCategory> get limitExceededCategories =>
+      limitedExpenditureCategories.where(
+        (element) => element.isLimitExceeded,
+      );
+
+  Iterable<TransactionExpenditureCategory> get noLimitedExpenditureCategories {
+    return availableExpenditureCategories.toSet().difference(
+          limitedExpenditureCategories.toSet(),
+        );
+  }
+
   Iterable<TransactionEntity> get incomeTransitions => transactions.where(
         (item) => item.type == TransactionType.income,
       );

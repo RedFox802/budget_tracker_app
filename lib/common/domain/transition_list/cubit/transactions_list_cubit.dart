@@ -1,6 +1,8 @@
 import 'package:budget_tracker_app/common/domain/transition_list/cubit/state/transactions_list_state.dart';
 import 'package:budget_tracker_app/common/domain/transition_list/model/filter/filter_bundle.dart';
 import 'package:budget_tracker_app/common/domain/transition_list/model/transaction/transaction_entity.dart';
+import 'package:budget_tracker_app/common/domain/transition_list/model/transaction_category/category_limit.dart';
+import 'package:budget_tracker_app/common/domain/transition_list/model/transaction_category/transaction_category.dart';
 import 'package:injectable/injectable.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:uuid/uuid.dart';
@@ -26,7 +28,42 @@ class TransactionsListCubit extends HydratedCubit<TransactionsListState> {
   }
 
   void init() {
-    emit(state.copyWith(transactions: []));
+    emit(
+      state.copyWith(
+        transactions: [],
+        availableIncomeCategories: TransactionCategory.defaultIncomeValues,
+        availableExpenditureCategories:
+            TransactionCategory.defaultExpenditureValues,
+      ),
+    );
+  }
+
+  void setCategoryLimit({
+    required TransactionExpenditureCategory category,
+    required int? limit,
+  }) {
+    final categoryWithLimit = category.copyWith(
+      limitEntity: limit == null
+          ? null
+          : CategoryLimit(
+              installationDate: DateTime.now(),
+              limit: limit,
+            ),
+    );
+    final limitedCategories = state.limitedExpenditureCategories.toList();
+    final index = limitedCategories.indexWhere((e) => e.id == category.id);
+    if (index >= 0) {
+      limitedCategories
+        ..removeAt(index)
+        ..insert(index, categoryWithLimit);
+    } else {
+      limitedCategories.add(categoryWithLimit);
+    }
+    emit(
+      state.copyWith(
+        limitedExpenditureCategories: limitedCategories,
+      ),
+    );
   }
 
   void resetSearchedTransactions() {
@@ -93,6 +130,12 @@ class TransactionsListCubit extends HydratedCubit<TransactionsListState> {
         transactions: transactionList,
         filteredTransactions: filteredList,
       ));
+
+      _changeCategoryAmount(
+        category: transaction.category,
+        value: transaction.amount,
+        isAdding: false,
+      );
     }
   }
 
@@ -151,6 +194,68 @@ class TransactionsListCubit extends HydratedCubit<TransactionsListState> {
         state.copyWith(
           transactions: [...state.transactions, newTransaction],
           filteredTransactions: filteredList,
+        ),
+      );
+    }
+
+    _changeCategoryAmount(
+      category: transaction.category,
+      value: transaction.amount,
+      isAdding: true,
+    );
+  }
+
+  void _changeCategoryAmount({
+    required TransactionCategory category,
+    required num value,
+    required bool isAdding,
+  }) {
+    final currentAmount = category.amount;
+    final newAmount = isAdding ? currentAmount + value : currentAmount - value;
+
+    if (category is TransactionExpenditureCategory) {
+      final categoryList = state.availableExpenditureCategories.toList();
+      final limitedCategoryList = state.limitedExpenditureCategories.toList();
+
+      final index = categoryList.indexWhere(
+        (e) => e.id == category.id,
+      );
+      final limitedIndex = limitedCategoryList.indexWhere(
+        (e) => e.id == category.id,
+      );
+      if (index >= 0) {
+        categoryList
+          ..removeAt(index)
+          ..insert(index, category.copyWith(amount: newAmount));
+      }
+      if (limitedIndex >= 0) {
+        limitedCategoryList
+          ..removeAt(limitedIndex)
+          ..insert(limitedIndex, category.copyWith(amount: newAmount));
+      }
+      emit(
+        state.copyWith(
+          availableExpenditureCategories: categoryList,
+          limitedExpenditureCategories: limitedCategoryList,
+        ),
+      );
+    }
+
+    if (category is TransactionIncomeCategory) {
+      final categoryList = state.availableIncomeCategories.toList();
+
+      final index = categoryList.indexWhere(
+        (e) => e.id == category.id,
+      );
+      if (index >= 0) {
+        categoryList
+          ..removeAt(index)
+          ..insert(index, category.copyWith(amount: newAmount));
+      }
+
+      emit(
+        state.copyWith(
+          availableIncomeCategories: categoryList,
         ),
       );
     }

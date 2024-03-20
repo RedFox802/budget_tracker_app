@@ -27,6 +27,28 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const AnalyticScreen(),
       );
     },
+    EditLimitRoute.name: (routeData) {
+      final args = routeData.argsAs<EditLimitRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: EditLimitModal(
+          category: args.category,
+          key: args.key,
+        ),
+      );
+    },
+    EditLimitsNestedRouterRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const EditLimitsNestedRouterScreen(),
+      );
+    },
+    EditLimitsRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const EditLimitsScreen(),
+      );
+    },
     EditTransactionRoute.name: (routeData) {
       final args = routeData.argsAs<EditTransactionRouteArgs>(
           orElse: () => const EditTransactionRouteArgs());
@@ -107,6 +129,72 @@ class AnalyticRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'AnalyticRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [EditLimitModal]
+class EditLimitRoute extends PageRouteInfo<EditLimitRouteArgs> {
+  EditLimitRoute({
+    required TransactionExpenditureCategory category,
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          EditLimitRoute.name,
+          args: EditLimitRouteArgs(
+            category: category,
+            key: key,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'EditLimitRoute';
+
+  static const PageInfo<EditLimitRouteArgs> page =
+      PageInfo<EditLimitRouteArgs>(name);
+}
+
+class EditLimitRouteArgs {
+  const EditLimitRouteArgs({
+    required this.category,
+    this.key,
+  });
+
+  final TransactionExpenditureCategory category;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'EditLimitRouteArgs{category: $category, key: $key}';
+  }
+}
+
+/// generated route for
+/// [EditLimitsNestedRouterScreen]
+class EditLimitsNestedRouterRoute extends PageRouteInfo<void> {
+  const EditLimitsNestedRouterRoute({List<PageRouteInfo>? children})
+      : super(
+          EditLimitsNestedRouterRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'EditLimitsNestedRouterRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [EditLimitsScreen]
+class EditLimitsRoute extends PageRouteInfo<void> {
+  const EditLimitsRoute({List<PageRouteInfo>? children})
+      : super(
+          EditLimitsRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'EditLimitsRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

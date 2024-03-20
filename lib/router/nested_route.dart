@@ -14,3 +14,9 @@ class TransactionsListNestedRouterScreen extends AutoRouter {
 class AnalyticNestedRouterScreen extends AutoRouter {
   const AnalyticNestedRouterScreen({super.key});
 }
+
+@RoutePage()
+class EditLimitsNestedRouterScreen extends AutoRouter {
+  const EditLimitsNestedRouterScreen({super.key});
+}
+

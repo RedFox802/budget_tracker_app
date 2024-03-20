@@ -30,24 +30,31 @@ TransactionCategory _$TransactionCategoryFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$TransactionCategory {
   String get name => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
   num get amount => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String name, num amount, num? limit)
+    required TResult Function(
+            String name, String id, num amount, CategoryLimit? limitEntity)
         expenditureCategory,
-    required TResult Function(String name, num amount) incomeCategory,
+    required TResult Function(String name, String id, num amount)
+        incomeCategory,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String name, num amount, num? limit)? expenditureCategory,
-    TResult? Function(String name, num amount)? incomeCategory,
+    TResult? Function(
+            String name, String id, num amount, CategoryLimit? limitEntity)?
+        expenditureCategory,
+    TResult? Function(String name, String id, num amount)? incomeCategory,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String name, num amount, num? limit)? expenditureCategory,
-    TResult Function(String name, num amount)? incomeCategory,
+    TResult Function(
+            String name, String id, num amount, CategoryLimit? limitEntity)?
+        expenditureCategory,
+    TResult Function(String name, String id, num amount)? incomeCategory,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -84,7 +91,7 @@ abstract class $TransactionCategoryCopyWith<$Res> {
           TransactionCategory value, $Res Function(TransactionCategory) then) =
       _$TransactionCategoryCopyWithImpl<$Res, TransactionCategory>;
   @useResult
-  $Res call({String name, num amount});
+  $Res call({String name, String id, num amount});
 }
 
 /// @nodoc
@@ -101,12 +108,17 @@ class _$TransactionCategoryCopyWithImpl<$Res, $Val extends TransactionCategory>
   @override
   $Res call({
     Object? name = null,
+    Object? id = null,
     Object? amount = null,
   }) {
     return _then(_value.copyWith(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as String,
       amount: null == amount
           ? _value.amount
@@ -125,7 +137,9 @@ abstract class _$$TransactionExpenditureCategoryCopyWith<$Res>
       __$$TransactionExpenditureCategoryCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String name, num amount, num? limit});
+  $Res call({String name, String id, num amount, CategoryLimit? limitEntity});
+
+  $CategoryLimitCopyWith<$Res>? get limitEntity;
 }
 
 /// @nodoc
@@ -142,23 +156,40 @@ class __$$TransactionExpenditureCategoryCopyWithImpl<$Res>
   @override
   $Res call({
     Object? name = null,
+    Object? id = null,
     Object? amount = null,
-    Object? limit = freezed,
+    Object? limitEntity = freezed,
   }) {
     return _then(_$TransactionExpenditureCategory(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       amount: null == amount
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
               as num,
-      limit: freezed == limit
-          ? _value.limit
-          : limit // ignore: cast_nullable_to_non_nullable
-              as num?,
+      limitEntity: freezed == limitEntity
+          ? _value.limitEntity
+          : limitEntity // ignore: cast_nullable_to_non_nullable
+              as CategoryLimit?,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $CategoryLimitCopyWith<$Res>? get limitEntity {
+    if (_value.limitEntity == null) {
+      return null;
+    }
+
+    return $CategoryLimitCopyWith<$Res>(_value.limitEntity!, (value) {
+      return _then(_value.copyWith(limitEntity: value));
+    });
   }
 }
 
@@ -167,7 +198,11 @@ class __$$TransactionExpenditureCategoryCopyWithImpl<$Res>
 class _$TransactionExpenditureCategory
     implements TransactionExpenditureCategory {
   const _$TransactionExpenditureCategory(
-      {required this.name, this.amount = 0, this.limit, final String? $type})
+      {required this.name,
+      required this.id,
+      this.amount = 0,
+      this.limitEntity,
+      final String? $type})
       : $type = $type ?? 'expenditureCategory';
 
   factory _$TransactionExpenditureCategory.fromJson(
@@ -177,17 +212,19 @@ class _$TransactionExpenditureCategory
   @override
   final String name;
   @override
+  final String id;
+  @override
   @JsonKey()
   final num amount;
   @override
-  final num? limit;
+  final CategoryLimit? limitEntity;
 
   @JsonKey(name: 'runtimeType')
   final String $type;
 
   @override
   String toString() {
-    return 'TransactionCategory.expenditureCategory(name: $name, amount: $amount, limit: $limit)';
+    return 'TransactionCategory.expenditureCategory(name: $name, id: $id, amount: $amount, limitEntity: $limitEntity)';
   }
 
   @override
@@ -196,13 +233,15 @@ class _$TransactionExpenditureCategory
         (other.runtimeType == runtimeType &&
             other is _$TransactionExpenditureCategory &&
             (identical(other.name, name) || other.name == name) &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.amount, amount) || other.amount == amount) &&
-            (identical(other.limit, limit) || other.limit == limit));
+            (identical(other.limitEntity, limitEntity) ||
+                other.limitEntity == limitEntity));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, name, amount, limit);
+  int get hashCode => Object.hash(runtimeType, name, id, amount, limitEntity);
 
   @JsonKey(ignore: true)
   @override
@@ -214,31 +253,37 @@ class _$TransactionExpenditureCategory
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String name, num amount, num? limit)
+    required TResult Function(
+            String name, String id, num amount, CategoryLimit? limitEntity)
         expenditureCategory,
-    required TResult Function(String name, num amount) incomeCategory,
+    required TResult Function(String name, String id, num amount)
+        incomeCategory,
   }) {
-    return expenditureCategory(name, amount, limit);
+    return expenditureCategory(name, id, amount, limitEntity);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String name, num amount, num? limit)? expenditureCategory,
-    TResult? Function(String name, num amount)? incomeCategory,
+    TResult? Function(
+            String name, String id, num amount, CategoryLimit? limitEntity)?
+        expenditureCategory,
+    TResult? Function(String name, String id, num amount)? incomeCategory,
   }) {
-    return expenditureCategory?.call(name, amount, limit);
+    return expenditureCategory?.call(name, id, amount, limitEntity);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String name, num amount, num? limit)? expenditureCategory,
-    TResult Function(String name, num amount)? incomeCategory,
+    TResult Function(
+            String name, String id, num amount, CategoryLimit? limitEntity)?
+        expenditureCategory,
+    TResult Function(String name, String id, num amount)? incomeCategory,
     required TResult orElse(),
   }) {
     if (expenditureCategory != null) {
-      return expenditureCategory(name, amount, limit);
+      return expenditureCategory(name, id, amount, limitEntity);
     }
     return orElse();
   }
@@ -287,8 +332,9 @@ class _$TransactionExpenditureCategory
 abstract class TransactionExpenditureCategory implements TransactionCategory {
   const factory TransactionExpenditureCategory(
       {required final String name,
+      required final String id,
       final num amount,
-      final num? limit}) = _$TransactionExpenditureCategory;
+      final CategoryLimit? limitEntity}) = _$TransactionExpenditureCategory;
 
   factory TransactionExpenditureCategory.fromJson(Map<String, dynamic> json) =
       _$TransactionExpenditureCategory.fromJson;
@@ -296,8 +342,10 @@ abstract class TransactionExpenditureCategory implements TransactionCategory {
   @override
   String get name;
   @override
+  String get id;
+  @override
   num get amount;
-  num? get limit;
+  CategoryLimit? get limitEntity;
   @override
   @JsonKey(ignore: true)
   _$$TransactionExpenditureCategoryCopyWith<_$TransactionExpenditureCategory>
@@ -313,7 +361,7 @@ abstract class _$$TransactionIncomeCategoryCopyWith<$Res>
       __$$TransactionIncomeCategoryCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String name, num amount});
+  $Res call({String name, String id, num amount});
 }
 
 /// @nodoc
@@ -328,12 +376,17 @@ class __$$TransactionIncomeCategoryCopyWithImpl<$Res>
   @override
   $Res call({
     Object? name = null,
+    Object? id = null,
     Object? amount = null,
   }) {
     return _then(_$TransactionIncomeCategory(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as String,
       amount: null == amount
           ? _value.amount
@@ -347,7 +400,10 @@ class __$$TransactionIncomeCategoryCopyWithImpl<$Res>
 @JsonSerializable()
 class _$TransactionIncomeCategory implements TransactionIncomeCategory {
   const _$TransactionIncomeCategory(
-      {required this.name, this.amount = 0, final String? $type})
+      {required this.name,
+      required this.id,
+      this.amount = 0,
+      final String? $type})
       : $type = $type ?? 'incomeCategory';
 
   factory _$TransactionIncomeCategory.fromJson(Map<String, dynamic> json) =>
@@ -355,6 +411,8 @@ class _$TransactionIncomeCategory implements TransactionIncomeCategory {
 
   @override
   final String name;
+  @override
+  final String id;
   @override
   @JsonKey()
   final num amount;
@@ -364,7 +422,7 @@ class _$TransactionIncomeCategory implements TransactionIncomeCategory {
 
   @override
   String toString() {
-    return 'TransactionCategory.incomeCategory(name: $name, amount: $amount)';
+    return 'TransactionCategory.incomeCategory(name: $name, id: $id, amount: $amount)';
   }
 
   @override
@@ -373,12 +431,13 @@ class _$TransactionIncomeCategory implements TransactionIncomeCategory {
         (other.runtimeType == runtimeType &&
             other is _$TransactionIncomeCategory &&
             (identical(other.name, name) || other.name == name) &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.amount, amount) || other.amount == amount));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, name, amount);
+  int get hashCode => Object.hash(runtimeType, name, id, amount);
 
   @JsonKey(ignore: true)
   @override
@@ -390,31 +449,37 @@ class _$TransactionIncomeCategory implements TransactionIncomeCategory {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String name, num amount, num? limit)
+    required TResult Function(
+            String name, String id, num amount, CategoryLimit? limitEntity)
         expenditureCategory,
-    required TResult Function(String name, num amount) incomeCategory,
+    required TResult Function(String name, String id, num amount)
+        incomeCategory,
   }) {
-    return incomeCategory(name, amount);
+    return incomeCategory(name, id, amount);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String name, num amount, num? limit)? expenditureCategory,
-    TResult? Function(String name, num amount)? incomeCategory,
+    TResult? Function(
+            String name, String id, num amount, CategoryLimit? limitEntity)?
+        expenditureCategory,
+    TResult? Function(String name, String id, num amount)? incomeCategory,
   }) {
-    return incomeCategory?.call(name, amount);
+    return incomeCategory?.call(name, id, amount);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String name, num amount, num? limit)? expenditureCategory,
-    TResult Function(String name, num amount)? incomeCategory,
+    TResult Function(
+            String name, String id, num amount, CategoryLimit? limitEntity)?
+        expenditureCategory,
+    TResult Function(String name, String id, num amount)? incomeCategory,
     required TResult orElse(),
   }) {
     if (incomeCategory != null) {
-      return incomeCategory(name, amount);
+      return incomeCategory(name, id, amount);
     }
     return orElse();
   }
@@ -463,6 +528,7 @@ class _$TransactionIncomeCategory implements TransactionIncomeCategory {
 abstract class TransactionIncomeCategory implements TransactionCategory {
   const factory TransactionIncomeCategory(
       {required final String name,
+      required final String id,
       final num amount}) = _$TransactionIncomeCategory;
 
   factory TransactionIncomeCategory.fromJson(Map<String, dynamic> json) =
@@ -470,6 +536,8 @@ abstract class TransactionIncomeCategory implements TransactionCategory {
 
   @override
   String get name;
+  @override
+  String get id;
   @override
   num get amount;
   @override

@@ -1,3 +1,5 @@
+import 'package:budget_tracker_app/common/domain/transition_list/model/transaction_category/category_limit.dart';
+import 'package:budget_tracker_app/utils/string_utils.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'transaction_category.freezed.dart';
@@ -8,12 +10,14 @@ part 'transaction_category.g.dart';
 sealed class TransactionCategory with _$TransactionCategory {
   const factory TransactionCategory.expenditureCategory({
     required String name,
+    required String id,
     @Default(0) num amount,
-    num? limit,
+    CategoryLimit? limitEntity,
   }) = TransactionExpenditureCategory;
 
   const factory TransactionCategory.incomeCategory({
     required String name,
+    required String id,
     @Default(0) num amount,
   }) = TransactionIncomeCategory;
 
@@ -22,60 +26,70 @@ sealed class TransactionCategory with _$TransactionCategory {
 
   static const food = TransactionExpenditureCategory(
     name: 'Покупка продуктов питания',
-    limit: 1200,
-    amount: 1000,
+    id: 'food',
   );
   static const travel = TransactionExpenditureCategory(
     name: 'Путешествия',
-    limit: 800,
-    amount: 1200,
+    id: 'travel',
   );
   static const activity = TransactionExpenditureCategory(
     name: 'Развлечения',
+    id: 'activity',
   );
 
   static const house = TransactionExpenditureCategory(
     name: 'Хозяйственные расходы',
+    id: 'house',
   );
 
   static const medicine = TransactionExpenditureCategory(
     name: 'Здоровье',
+    id: 'medicine',
   );
 
   static const family = TransactionExpenditureCategory(
     name: 'Семейные расходы',
+    id: 'family',
   );
 
   static const gadgets = TransactionExpenditureCategory(
     name: 'Техника',
+    id: 'gadgets',
   );
 
   static const gifts = TransactionExpenditureCategory(
     name: 'Подарки',
+    id: 'gifts',
   );
 
   static const service = TransactionExpenditureCategory(
     name: 'Услуги',
+    id: 'services',
   );
 
   static const clothes = TransactionExpenditureCategory(
     name: 'Одежда',
+    id: 'clothes',
   );
 
   static const salary = TransactionIncomeCategory(
     name: 'Заработная плата',
+    id: 'salary',
   );
 
   static const additionIncome = TransactionIncomeCategory(
     name: 'Дополнительный доход',
+    id: 'addition_income',
   );
 
   static const passiveIncome = TransactionIncomeCategory(
     name: 'Пассивный доход',
+    id: 'passive_income',
   );
 
   static const giftIncome = TransactionIncomeCategory(
     name: 'Подарок',
+    id: 'your_gift',
   );
 
   static const defaultExpenditureValues = [
@@ -101,32 +115,43 @@ sealed class TransactionCategory with _$TransactionCategory {
 
 extension TransactionExpenditureCategoryHelper
     on TransactionExpenditureCategory {
-  bool get isLimitExceeded {
-    if (limit == null) return false;
+  bool get hasLimit => limitEntity != null;
 
-    return amount > limit!;
+  bool get isLimitExceeded {
+    if (!hasLimit) return false;
+
+    return amount > limitEntity!.limit;
   }
 
   bool get hasExceedingLimitThreat {
-    if (limit == null) return false;
+    if (!hasLimit) return false;
 
-    return (limit! - amount) < limit! * 0.15;
+    final limitValue = limitEntity!.limit;
+    return (limitValue - amount) < limitValue * 0.15;
   }
 
   String get formattedAmount {
-    return '$amount ₽';
+    return StringUtils.getMoneyFormattedString('$amount');
   }
 
   String get formattedLimit {
-    if (limit == null) return '';
+    final limitValue = limitEntity?.limit;
+    return limitValue == null
+        ? ''
+        : StringUtils.getMoneyFormattedString('$limitValue');
+  }
 
-    return 'Лимит $limit ₽';
+  String get formattedLimitWithLabel {
+    final limitValue = limitEntity?.limit;
+    return limitValue == null
+        ? ''
+        : StringUtils.getMoneyFormattedString('Лимит $limitValue');
   }
 
   double? get percentageSpent {
-    if (limit == null) return null;
+    if (!hasLimit) return null;
 
-    final percentage = amount / limit!;
+    final percentage = amount / limitEntity!.limit;
     return percentage > 1 ? 1 : percentage;
   }
 }

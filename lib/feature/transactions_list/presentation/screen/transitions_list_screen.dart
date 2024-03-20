@@ -54,9 +54,15 @@ class TransitionsListScreen extends StatelessWidget {
                 final currentKey = monthsMap.keys.elementAt(index);
                 final currentItem = monthsMap[currentKey];
                 if (currentItem != null) {
-                  return TransactionGroupCard(
-                    groupName: currentKey,
-                    transactions: currentItem,
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 2,
+                    ),
+                    child: TransactionGroupCard(
+                      groupName: currentKey,
+                      transactions: currentItem,
+                    ),
                   );
                 }
                 return const SizedBox.shrink();

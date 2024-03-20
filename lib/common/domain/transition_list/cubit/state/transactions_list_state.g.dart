@@ -22,6 +22,11 @@ _$_TransactionsListState _$$_TransactionsListStateFromJson(
                   TransactionIncomeCategory.fromJson(
                       e as Map<String, dynamic>)) ??
               TransactionCategory.defaultIncomeValues,
+      limitedExpenditureCategories:
+          (json['limitedExpenditureCategories'] as List<dynamic>?)?.map((e) =>
+                  TransactionExpenditureCategory.fromJson(
+                      e as Map<String, dynamic>)) ??
+              const [],
     );
 
 Map<String, dynamic> _$$_TransactionsListStateToJson(
@@ -31,4 +36,6 @@ Map<String, dynamic> _$$_TransactionsListStateToJson(
       'availableExpenditureCategories':
           instance.availableExpenditureCategories.toList(),
       'availableIncomeCategories': instance.availableIncomeCategories.toList(),
+      'limitedExpenditureCategories':
+          instance.limitedExpenditureCategories.toList(),
     };

@@ -102,7 +102,7 @@ class _TransactionCategory extends StatelessWidget {
             const SizedBox(height: 4),
             Flexible(
               child: Text(
-                category.formattedLimit,
+                category.formattedLimitWithLabel,
                 style: AppTextTheme.smallDisabled,
                 overflow: TextOverflow.ellipsis,
               ),

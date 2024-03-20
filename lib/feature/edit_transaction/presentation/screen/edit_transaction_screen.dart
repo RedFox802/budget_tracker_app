@@ -9,7 +9,7 @@ import 'package:budget_tracker_app/common/presentation/component/card_wrapper/ca
 import 'package:budget_tracker_app/di/service_locator.dart';
 import 'package:budget_tracker_app/feature/edit_transaction/presentation/component/edit_transaction_catagory_card.dart';
 import 'package:budget_tracker_app/feature/edit_transaction/presentation/component/edit_transaction_date_card.dart';
-import 'package:budget_tracker_app/feature/edit_transaction/presentation/component/edit_transaction_name_card.dart';
+import 'package:budget_tracker_app/feature/edit_transaction/presentation/component/edit_entering_value_card.dart';
 import 'package:budget_tracker_app/feature/edit_transaction/presentation/component/edit_transaction_type_card.dart';
 import 'package:budget_tracker_app/theme/app_colors.dart';
 import 'package:flutter/material.dart';

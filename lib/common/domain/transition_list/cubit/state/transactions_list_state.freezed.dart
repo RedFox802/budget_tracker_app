@@ -35,6 +35,8 @@ mixin _$TransactionsListState {
       throw _privateConstructorUsedError;
   Iterable<TransactionIncomeCategory> get availableIncomeCategories =>
       throw _privateConstructorUsedError;
+  Iterable<TransactionExpenditureCategory> get limitedExpenditureCategories =>
+      throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -57,7 +59,8 @@ abstract class $TransactionsListStateCopyWith<$Res> {
       @JsonKey(includeFromJson: false, includeToJson: false)
       Iterable<TransactionEntity> searchedTransactions,
       Iterable<TransactionExpenditureCategory> availableExpenditureCategories,
-      Iterable<TransactionIncomeCategory> availableIncomeCategories});
+      Iterable<TransactionIncomeCategory> availableIncomeCategories,
+      Iterable<TransactionExpenditureCategory> limitedExpenditureCategories});
 
   $FilterBundleCopyWith<$Res>? get filterBundle;
 }
@@ -82,6 +85,7 @@ class _$TransactionsListStateCopyWithImpl<$Res,
     Object? searchedTransactions = null,
     Object? availableExpenditureCategories = null,
     Object? availableIncomeCategories = null,
+    Object? limitedExpenditureCategories = null,
   }) {
     return _then(_value.copyWith(
       transactions: null == transactions
@@ -108,6 +112,10 @@ class _$TransactionsListStateCopyWithImpl<$Res,
           ? _value.availableIncomeCategories
           : availableIncomeCategories // ignore: cast_nullable_to_non_nullable
               as Iterable<TransactionIncomeCategory>,
+      limitedExpenditureCategories: null == limitedExpenditureCategories
+          ? _value.limitedExpenditureCategories
+          : limitedExpenditureCategories // ignore: cast_nullable_to_non_nullable
+              as Iterable<TransactionExpenditureCategory>,
     ) as $Val);
   }
 
@@ -141,7 +149,8 @@ abstract class _$$_TransactionsListStateCopyWith<$Res>
       @JsonKey(includeFromJson: false, includeToJson: false)
       Iterable<TransactionEntity> searchedTransactions,
       Iterable<TransactionExpenditureCategory> availableExpenditureCategories,
-      Iterable<TransactionIncomeCategory> availableIncomeCategories});
+      Iterable<TransactionIncomeCategory> availableIncomeCategories,
+      Iterable<TransactionExpenditureCategory> limitedExpenditureCategories});
 
   @override
   $FilterBundleCopyWith<$Res>? get filterBundle;
@@ -164,6 +173,7 @@ class __$$_TransactionsListStateCopyWithImpl<$Res>
     Object? searchedTransactions = null,
     Object? availableExpenditureCategories = null,
     Object? availableIncomeCategories = null,
+    Object? limitedExpenditureCategories = null,
   }) {
     return _then(_$_TransactionsListState(
       transactions: null == transactions
@@ -190,6 +200,10 @@ class __$$_TransactionsListStateCopyWithImpl<$Res>
           ? _value.availableIncomeCategories
           : availableIncomeCategories // ignore: cast_nullable_to_non_nullable
               as Iterable<TransactionIncomeCategory>,
+      limitedExpenditureCategories: null == limitedExpenditureCategories
+          ? _value.limitedExpenditureCategories
+          : limitedExpenditureCategories // ignore: cast_nullable_to_non_nullable
+              as Iterable<TransactionExpenditureCategory>,
     ));
   }
 }
@@ -206,8 +220,8 @@ class _$_TransactionsListState implements _TransactionsListState {
       this.searchedTransactions = const [],
       this.availableExpenditureCategories =
           TransactionCategory.defaultExpenditureValues,
-      this.availableIncomeCategories =
-          TransactionCategory.defaultIncomeValues});
+      this.availableIncomeCategories = TransactionCategory.defaultIncomeValues,
+      this.limitedExpenditureCategories = const []});
 
   factory _$_TransactionsListState.fromJson(Map<String, dynamic> json) =>
       _$$_TransactionsListStateFromJson(json);
@@ -230,10 +244,13 @@ class _$_TransactionsListState implements _TransactionsListState {
   @override
   @JsonKey()
   final Iterable<TransactionIncomeCategory> availableIncomeCategories;
+  @override
+  @JsonKey()
+  final Iterable<TransactionExpenditureCategory> limitedExpenditureCategories;
 
   @override
   String toString() {
-    return 'TransactionsListState(transactions: $transactions, filteredTransactions: $filteredTransactions, filterBundle: $filterBundle, searchedTransactions: $searchedTransactions, availableExpenditureCategories: $availableExpenditureCategories, availableIncomeCategories: $availableIncomeCategories)';
+    return 'TransactionsListState(transactions: $transactions, filteredTransactions: $filteredTransactions, filterBundle: $filterBundle, searchedTransactions: $searchedTransactions, availableExpenditureCategories: $availableExpenditureCategories, availableIncomeCategories: $availableIncomeCategories, limitedExpenditureCategories: $limitedExpenditureCategories)';
   }
 
   @override
@@ -253,7 +270,10 @@ class _$_TransactionsListState implements _TransactionsListState {
                 other.availableExpenditureCategories,
                 availableExpenditureCategories) &&
             const DeepCollectionEquality().equals(
-                other.availableIncomeCategories, availableIncomeCategories));
+                other.availableIncomeCategories, availableIncomeCategories) &&
+            const DeepCollectionEquality().equals(
+                other.limitedExpenditureCategories,
+                limitedExpenditureCategories));
   }
 
   @JsonKey(ignore: true)
@@ -265,7 +285,8 @@ class _$_TransactionsListState implements _TransactionsListState {
       filterBundle,
       const DeepCollectionEquality().hash(searchedTransactions),
       const DeepCollectionEquality().hash(availableExpenditureCategories),
-      const DeepCollectionEquality().hash(availableIncomeCategories));
+      const DeepCollectionEquality().hash(availableIncomeCategories),
+      const DeepCollectionEquality().hash(limitedExpenditureCategories));
 
   @JsonKey(ignore: true)
   @override
@@ -293,8 +314,9 @@ abstract class _TransactionsListState implements TransactionsListState {
       final Iterable<TransactionEntity> searchedTransactions,
       final Iterable<TransactionExpenditureCategory>
           availableExpenditureCategories,
-      final Iterable<TransactionIncomeCategory>
-          availableIncomeCategories}) = _$_TransactionsListState;
+      final Iterable<TransactionIncomeCategory> availableIncomeCategories,
+      final Iterable<TransactionExpenditureCategory>
+          limitedExpenditureCategories}) = _$_TransactionsListState;
 
   factory _TransactionsListState.fromJson(Map<String, dynamic> json) =
       _$_TransactionsListState.fromJson;
@@ -314,6 +336,8 @@ abstract class _TransactionsListState implements TransactionsListState {
   Iterable<TransactionExpenditureCategory> get availableExpenditureCategories;
   @override
   Iterable<TransactionIncomeCategory> get availableIncomeCategories;
+  @override
+  Iterable<TransactionExpenditureCategory> get limitedExpenditureCategories;
   @override
   @JsonKey(ignore: true)
   _$$_TransactionsListStateCopyWith<_$_TransactionsListState> get copyWith =>
