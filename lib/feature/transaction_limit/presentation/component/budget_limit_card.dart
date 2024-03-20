@@ -71,8 +71,8 @@ class _HasLimitState extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Ваши лимиты по категориям на $currentMonth',
+          const Text(
+            'Ваши лимиты по категориям',
             style: AppTextTheme.title,
             maxLines: 2,
             textAlign: TextAlign.center,

@@ -33,7 +33,7 @@ class EditTransactionDateCard extends StatefulWidget {
 }
 
 class _EditTransactionDateCardState extends State<EditTransactionDateCard> {
-  bool _showPicker = true;
+  bool _showPicker = false;
 
   @override
   Widget build(BuildContext context) {
@@ -62,6 +62,7 @@ class _EditTransactionDateCardState extends State<EditTransactionDateCard> {
         ),
         secondChild: AppListTile(
           title: widget.title,
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           subtitle: selectedValue != null
               ? selectedValue.formattedDate
               : 'Не выбрано',

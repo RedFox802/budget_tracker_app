@@ -30,6 +30,7 @@ class EmptyDataCard extends StatelessWidget {
         child: Align(
           alignment: alignment ?? Alignment.center,
           child: AppListTile(
+            align: TextAlign.center,
             title: title,
             subtitle: subtitle,
             titleStyle: AppTextTheme.title,

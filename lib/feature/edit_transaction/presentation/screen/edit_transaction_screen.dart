@@ -92,12 +92,9 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
             keyboardType: TextInputType.number,
             formatter: FilteringTextInputFormatter.digitsOnly,
             onChanged: (String value) {
-              final amount = int.tryParse(value);
-              if (amount != null) {
-                transactionEntity = transactionEntity.copyWith(
-                  amount: amount,
-                );
-              }
+              transactionEntity = transactionEntity.copyWith(
+                amount: int.tryParse(value) ?? 0,
+              );
             },
           ),
           indent,

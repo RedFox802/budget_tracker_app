@@ -15,34 +15,54 @@ class AnalyticScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const indent = SizedBox(height: 10);
     final listenableState = context.watch<TransactionsListCubit>().state;
+    final expenditureTransactionsAmountsByCategories =
+        listenableState.expenditureTransactionsAmountsByCategories;
+    final incomeTransactionsAmountsByLastYearMonths =
+        listenableState.incomeTransactionsAmountsByLastYearMonths;
+    final expenditureTransactionsAmountsByLastYearMonths =
+        listenableState.expenditureTransactionsAmountsByLastYearMonths;
+    final hasExpendituresIncomesChartData =
+        expenditureTransactionsAmountsByLastYearMonths.length > 1 ||
+            incomeTransactionsAmountsByLastYearMonths.length > 1;
+    final hasCategoriesChartData =
+        expenditureTransactionsAmountsByCategories.length > 1;
+
+    Widget body;
+    if (listenableState.transactions.isEmpty) {
+      body = const EmptyDataCard(
+        title: 'Ваш список операций пуст',
+        subtitle: 'Перейдите во вкладку Транзакции для добавления операций',
+      );
+    } else if (!hasExpendituresIncomesChartData && !hasCategoriesChartData) {
+      body = const EmptyDataCard(
+        title: 'Недостаточно данных для аналитики',
+        subtitle: 'Добавьте больше транзакций для полноты аналитических данных',
+      );
+    } else {
+      body = ListView(
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        children: [
+          if (hasExpendituresIncomesChartData)
+            AnalyticLineChart(
+              incomeData: incomeTransactionsAmountsByLastYearMonths,
+              expenditureData: expenditureTransactionsAmountsByLastYearMonths,
+            ),
+          if (expenditureTransactionsAmountsByCategories.length >= 2)
+            Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: CategoriesBarChart(
+                data: expenditureTransactionsAmountsByCategories,
+              ),
+            ),
+        ],
+      );
+    }
+
     return Scaffold(
       backgroundColor: AppColors.backgroundPrimary,
       appBar: const CustomAppBar(),
-      body: listenableState.transactions.isEmpty
-          ? const EmptyDataCard(
-              title: 'Ваш список операций пуст',
-              subtitle:
-                  'Перейдите во вкладку Транзакции для добавления операций',
-            )
-          : ListView(
-              children: [
-                indent,
-                AnalyticLineChart(
-                  incomeData:
-                      listenableState.incomeTransactionsAmountsByLastYearMonths,
-                  expenditureData: listenableState
-                      .expenditureTransactionsAmountsByLastYearMonths,
-                ),
-                indent,
-                CategoriesBarChart(
-                  data: listenableState
-                      .expenditureTransactionsAmountsByCategories,
-                ),
-                indent,
-              ],
-            ),
+      body: body,
     );
   }
 }

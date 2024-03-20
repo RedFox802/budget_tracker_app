@@ -12,6 +12,8 @@ class AppListTile extends StatelessWidget {
     this.trailing,
     this.onTap,
     this.subtitlePadding,
+    this.align,
+    this.padding,
     super.key,
   });
 
@@ -33,11 +35,15 @@ class AppListTile extends StatelessWidget {
 
   final EdgeInsetsGeometry? subtitlePadding;
 
+  final TextAlign? align;
+
+  final EdgeInsets? padding;
+
   @override
   Widget build(BuildContext context) {
     return ListTile(
       minVerticalPadding: 0,
-      contentPadding: EdgeInsets.zero,
+      contentPadding: padding ?? EdgeInsets.zero,
       visualDensity: const VisualDensity(
         vertical: -4,
         horizontal: -4,
@@ -47,6 +53,7 @@ class AppListTile extends StatelessWidget {
         title,
         style: titleStyle ?? AppTextTheme.title,
         maxLines: titleMaxLines,
+        textAlign: align,
       ),
       subtitle: Padding(
         padding: subtitlePadding ?? EdgeInsets.zero,
@@ -54,6 +61,7 @@ class AppListTile extends StatelessWidget {
           subtitle,
           style: subtitleStyle ?? AppTextTheme.regular,
           maxLines: subtitleMaxLines,
+          textAlign: align,
         ),
       ),
       trailing: trailing,

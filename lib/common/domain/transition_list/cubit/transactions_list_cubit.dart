@@ -31,6 +31,7 @@ class TransactionsListCubit extends HydratedCubit<TransactionsListState> {
     emit(
       state.copyWith(
         transactions: [],
+        limitedExpenditureCategories: [],
         availableIncomeCategories: TransactionCategory.defaultIncomeValues,
         availableExpenditureCategories:
             TransactionCategory.defaultExpenditureValues,
@@ -42,7 +43,11 @@ class TransactionsListCubit extends HydratedCubit<TransactionsListState> {
     required TransactionExpenditureCategory category,
     required int? limit,
   }) {
-    final categoryWithLimit = category.copyWith(
+    final currentCategory = state.availableExpenditureCategories.singleWhere(
+      (e) => e.id == category.id,
+    );
+
+    final categoryWithLimit = currentCategory.copyWith(
       limitEntity: limit == null
           ? null
           : CategoryLimit(
@@ -52,12 +57,16 @@ class TransactionsListCubit extends HydratedCubit<TransactionsListState> {
     );
     final limitedCategories = state.limitedExpenditureCategories.toList();
     final index = limitedCategories.indexWhere((e) => e.id == category.id);
-    if (index >= 0) {
-      limitedCategories
-        ..removeAt(index)
-        ..insert(index, categoryWithLimit);
+    if (limit == null) {
+      limitedCategories.removeAt(index);
     } else {
-      limitedCategories.add(categoryWithLimit);
+      if (index >= 0) {
+        limitedCategories
+          ..removeAt(index)
+          ..insert(index, categoryWithLimit);
+      } else {
+        limitedCategories.add(categoryWithLimit);
+      }
     }
     emit(
       state.copyWith(
@@ -123,12 +132,18 @@ class TransactionsListCubit extends HydratedCubit<TransactionsListState> {
     if (transactionList.contains(transaction)) {
       transactionList.remove(transaction);
       final filteredList = state.filteredTransactions.toList();
+      final searchedList = state.searchedTransactions.toList();
+
       if (filteredList.contains(transaction)) {
         filteredList.remove(transaction);
+      }
+      if (searchedList.contains(transaction)) {
+        searchedList.remove(transaction);
       }
       emit(state.copyWith(
         transactions: transactionList,
         filteredTransactions: filteredList,
+        searchedTransactions: searchedList,
       ));
 
       _changeCategoryAmount(
@@ -144,6 +159,7 @@ class TransactionsListCubit extends HydratedCubit<TransactionsListState> {
         List<TransactionEntity>.from(state.transactions);
 
     final filteredList = state.filteredTransactions.toList();
+    final searchedList = state.searchedTransactions.toList();
 
     final elementIndex =
         currentTransactionList.indexWhere((e) => e.id == transaction.id);
@@ -163,9 +179,20 @@ class TransactionsListCubit extends HydratedCubit<TransactionsListState> {
           ..insert(filteredElementIndex, transaction);
       }
 
+      final searchedElementIndex = searchedList.indexWhere(
+        (e) => e.id == transaction.id,
+      );
+
+      if (searchedElementIndex >= 0) {
+        searchedList
+          ..removeAt(searchedElementIndex)
+          ..insert(searchedElementIndex, transaction);
+      }
+
       emit(state.copyWith(
         transactions: currentTransactionList,
         filteredTransactions: filteredList,
+        searchedTransactions: searchedList,
       ));
     } else {
       final newTransaction = transaction.copyWith(
@@ -188,12 +215,25 @@ class TransactionsListCubit extends HydratedCubit<TransactionsListState> {
         if (isTypeValid && isCategoryValid && isDateValid) {
           filteredList.add(newTransaction);
         }
+      } else {
+        filteredList.add(newTransaction);
+      }
+
+      final searchedElementIndex = searchedList.indexWhere(
+        (e) => e.id == transaction.id,
+      );
+
+      if (searchedElementIndex >= 0) {
+        searchedList
+          ..removeAt(searchedElementIndex)
+          ..insert(searchedElementIndex, transaction);
       }
 
       emit(
         state.copyWith(
           transactions: [...state.transactions, newTransaction],
           filteredTransactions: filteredList,
+          searchedTransactions: searchedList,
         ),
       );
     }
@@ -220,19 +260,35 @@ class TransactionsListCubit extends HydratedCubit<TransactionsListState> {
       final index = categoryList.indexWhere(
         (e) => e.id == category.id,
       );
+
       final limitedIndex = limitedCategoryList.indexWhere(
         (e) => e.id == category.id,
       );
-      if (index >= 0) {
-        categoryList
-          ..removeAt(index)
-          ..insert(index, category.copyWith(amount: newAmount));
-      }
+
       if (limitedIndex >= 0) {
+        final currentCategory = limitedCategoryList.elementAt(limitedIndex);
+        final currentAmount = currentCategory.amount;
+        final newCategory = currentCategory.copyWith(
+          amount: currentAmount + value,
+        );
+
         limitedCategoryList
           ..removeAt(limitedIndex)
-          ..insert(limitedIndex, category.copyWith(amount: newAmount));
+          ..insert(limitedIndex, newCategory);
       }
+
+      if (index >= 0) {
+        final currentCategory = categoryList.elementAt(index);
+        final currentAmount = currentCategory.amount;
+        final newCategory = currentCategory.copyWith(
+          amount: currentAmount + value,
+        );
+
+        categoryList
+          ..removeAt(index)
+          ..insert(index, newCategory);
+      }
+
       emit(
         state.copyWith(
           availableExpenditureCategories: categoryList,

@@ -38,14 +38,14 @@ class ExceedingSpendingLimitWarningCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 10),
-          ...categories.map(
-            (item) => Padding(
-              padding: const EdgeInsets.only(top: 8),
-              child: _TransactionCategory._(
-                category: item,
+          ...categories.toSet().map(
+                (item) => Padding(
+                  padding: const EdgeInsets.only(top: 8),
+                  child: _TransactionCategory._(
+                    category: item,
+                  ),
+                ),
               ),
-            ),
-          ),
         ],
       ),
     );

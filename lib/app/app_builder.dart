@@ -13,7 +13,7 @@ class AppBuilder {
 
   List<SingleChildWidget> get providers => [
         BlocProvider.value(
-          value: getIt<TransactionsListCubit>(),
+          value: getIt<TransactionsListCubit>()..init(),
         ),
       ];
 

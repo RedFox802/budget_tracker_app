@@ -38,7 +38,7 @@ class AnalyticLineChart extends StatelessWidget {
     );
 
     return AppChartWrapper(
-      title: 'Статиcтика по расходам и доходам',
+      title: 'Статиcтика по расходам и доходам по месяцам за текущий год',
       chartWidget: ConstrainedBox(
         constraints: BoxConstraints(
           maxHeight: AppChartUtils.minChartHeight,

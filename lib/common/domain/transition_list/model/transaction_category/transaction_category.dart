@@ -25,7 +25,7 @@ sealed class TransactionCategory with _$TransactionCategory {
       _$TransactionCategoryFromJson(json);
 
   static const food = TransactionExpenditureCategory(
-    name: 'Покупка продуктов питания',
+    name: 'Продукты',
     id: 'food',
   );
   static const travel = TransactionExpenditureCategory(
@@ -38,7 +38,7 @@ sealed class TransactionCategory with _$TransactionCategory {
   );
 
   static const house = TransactionExpenditureCategory(
-    name: 'Хозяйственные расходы',
+    name: 'Хозяйство',
     id: 'house',
   );
 
@@ -48,7 +48,7 @@ sealed class TransactionCategory with _$TransactionCategory {
   );
 
   static const family = TransactionExpenditureCategory(
-    name: 'Семейные расходы',
+    name: 'Семья',
     id: 'family',
   );
 

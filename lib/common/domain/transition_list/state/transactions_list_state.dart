@@ -1,4 +1,6 @@
 // ignore_for_file:invalid_annotation_target
+import 'dart:math';
+
 import 'package:budget_tracker_app/common/domain/transition_list/model/filter/filter_bundle.dart';
 import 'package:budget_tracker_app/common/domain/transition_list/model/transaction/transaction_entity.dart';
 import 'package:budget_tracker_app/common/domain/transition_list/model/transaction_category/transaction_category.dart';
@@ -119,20 +121,38 @@ extension TransactionsListHelper on TransactionsListState {
   Map<TransactionExpenditureCategory, double>
       get expenditureTransactionsAmountsByCategories {
     final result = <TransactionExpenditureCategory, double>{};
-    for (final category in availableExpenditureCategories) {
-      result.addAll({
-        category: expenditureTransitions
-            .where((e) => e.category == category)
-            .fold<double>(0, (prValue, element) => prValue + element.amount),
-      });
+    final existCategories = transactions.map((e) => e.category).toSet();
+    final categories = <TransactionExpenditureCategory>[];
+
+    for (final item in existCategories) {
+      if (item is TransactionExpenditureCategory &&
+          categories.indexWhere((e) => e.id == item.id) == -1) {
+        categories.add(item);
+      }
     }
+
+    for (final category in categories) {
+      final amount = expenditureTransitions
+          .where((e) => e.category == category)
+          .fold<double>(0, (prValue, element) => prValue + element.amount);
+
+      if (amount > 0) {
+        result.addAll({category: amount});
+      }
+    }
+
     return result;
   }
 
-  Set<int> getMonthsListByYear(int year) => transactions
-      .where((e) => e.date.year == year)
-      .map((e) => e.date.month)
-      .toSet();
+  Set<int> getMonthsListByYear(int year) {
+    final maxMonth = transactions
+        .where((e) => e.date.year == year)
+        .map((e) => e.date.month)
+        .toSet()
+        .fold(0, (prValue, item) => item > prValue ? item : prValue);
+
+    return List.generate(min(maxMonth, 12), (index) => index + 1).toSet();
+  }
 
   Map<int, Iterable<TransactionEntity>> transactionsByLastYearMonths(
     Iterable<TransactionEntity> transactions,

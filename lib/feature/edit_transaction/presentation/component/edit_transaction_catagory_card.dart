@@ -37,7 +37,7 @@ class EditTransactionCategoryCard extends StatefulWidget {
 
 class _EditTransactionCategoryCardState
     extends State<EditTransactionCategoryCard> {
-  bool _showPicker = true;
+  bool _showPicker = false;
 
   bool get showClearButton =>
       widget.selectedCategory != null && widget.needClearButton;
@@ -69,6 +69,7 @@ class _EditTransactionCategoryCardState
           },
         ),
         secondChild: AppListTile(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           title: widget.title,
           titleStyle: AppTextTheme.title,
           subtitle:
