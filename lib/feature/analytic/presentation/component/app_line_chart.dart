@@ -52,8 +52,13 @@ class AnalyticLineChart extends StatelessWidget {
               maxY: maxAmount,
               maxX: horizontalItemsLength,
               lineBarsData: [
-                _getChartBarData(incomeData),
-                _getChartBarData(expenditureData),
+                _getChartBarData(
+                  data: incomeData, color: AppColors.green,
+                ),
+                _getChartBarData(
+                  data: expenditureData,
+                  color: AppColors.error,
+                ),
               ],
               titlesData: FlTitlesData(
                 leftTitles: AppChartUtils.getVerticalTiles(
@@ -102,9 +107,10 @@ class AnalyticLineChart extends StatelessWidget {
     );
   }
 
-  LineChartBarData _getChartBarData(
-    Map<int, double> data,
-  ) {
+  LineChartBarData _getChartBarData({
+    required Map<int, double> data,
+    required Color color,
+  }) {
     final List<FlSpot> spots = [];
     for (final item in data.keys) {
       final dataItem = data[item];
@@ -118,7 +124,6 @@ class AnalyticLineChart extends StatelessWidget {
       }
     }
 
-    const color = AppColors.primary100;
     return LineChartBarData(
       spots: spots,
       barWidth: 2,

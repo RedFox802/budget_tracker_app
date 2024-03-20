@@ -56,9 +56,11 @@ extension LimitedExpenditureCategoriesHelper on TransactionsListState {
       );
 
   Iterable<TransactionExpenditureCategory> get noLimitedExpenditureCategories {
-    return availableExpenditureCategories.toSet().difference(
-          limitedExpenditureCategories.toSet(),
-        );
+    final limitedCategories = limitedExpenditureCategories.toList();
+    return availableExpenditureCategories.where((item) {
+      final index = limitedCategories.indexWhere((e) => e.id == item.id);
+      return index == -1;
+    });
   }
 }
 
